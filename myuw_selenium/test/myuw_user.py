@@ -20,6 +20,7 @@ class testUser():
         self.unread = 0
         self.email = False
         self.regcard = False
+        self.regcard2 = False
         self.regholds = 0
         self.reglinks = ()
         self.schedule = False
@@ -134,14 +135,33 @@ class testUser():
             
     # Checks for presense of registration card, and correct links
     # on the card
+    # You can either specify the reg card title as a string, as a list of reg card titles, 
+    # or the legacy 'True' value. 
     def check_reg_card(self):
         if self.regcard:
-            try:
-                e = self.driver.find_element_by_id('RegStatusCard')
-            except selenium.common.exceptions.NoSuchElementException:
-                self.test.fail('Could not find registration card')
-            title = e.find_element_by_tag_name('h3').text
-            self.test.assertEqual(title, 'Registration: Autumn 2013')
+            if type(self.regcard) == str:
+                regcard = [self.regcard]
+            elif self.regcard == True:
+                regcard = ['Registration: Summer 2013']
+            else:
+                regcard = self.regcard
+            #time.sleep(.5) # TODO: do this better
+            el = self.driver.find_elements_by_xpath('//div[@data-name="RegistrationCard"]')
+
+            if len(el) != len(regcard):
+                self.test.fail('Found %s reg cards when %s were expected' %(len(el), len(regcard)))
+            
+            for i in range(len(el)):
+                e = el[i]
+                card = regcard[i]
+                title = e.find_element_by_tag_name('h3').text
+                self.test.assertEqual(title, card)
+
+        else:
+
+            el = self.driver.find_elements_by_xpath('//div[@data-name="RegistrationCard"]')
+            if len(el) > 0:
+                self.test.fail('Found reg card(s) when none were expected')
             # Broken right now because of show more button
             # TODO: fix
             #if self.reglinks:
@@ -149,6 +169,8 @@ class testUser():
             #    for i in range(0, len(self.reglinks)):
             #        self.test.assertEqual(self.reglinks[i].text, links[i].text, 'Registration card link had the wrong text')
             #        self.test.assertEqual(self.reglinks[i].url, links[i].get_attribute('href'), 'Registration card link had the wrong URL')
+
+        
 
     # Checks to make sure course cards are as expected
     def check_schedule(self):
@@ -594,7 +616,6 @@ class testUser():
         #check_notices_count, 
         #check_unread_notices_count, 
         check_email_link, 
-        #check_reg_card, 
         check_schedule, 
         check_visual_schedule, 
         check_HFS, 
@@ -606,6 +627,7 @@ class testUser():
         #check_records,
         check_academic_card,
         check_grade_card,
+        check_reg_card, 
     )
 
     # Run every check
@@ -617,6 +639,11 @@ class testUser():
 
 class testUserDate(testUser):
     all_tests = (
-        testUser.all_tests[1],
-        testUser.all_tests[2],
+        #testUser.all_tests[1],
+        #testUser.all_tests[2],
+        #testUser.all_tests[5], 
+        #testUser.all_tests[7], 
+        #testUser.all_tests[9],
+        #testUser.all_tests[10],
+        testUser.all_tests[11], 
     )

@@ -168,8 +168,10 @@ class myuw_base_scenario():
     def setDate(self, date):
         d = self.driver
         d.get(self.user.dates)
+        time.sleep(.5)
         e = d.find_element_by_xpath('//input[@name="date"]')
         e.send_keys(date + '\n')
+        time.sleep(.5)
 
 
 class myuw_user_scenario(myuw_base_scenario):
@@ -218,7 +220,7 @@ class myuw_testuser(SeleniumLiveServerTestCase):
     '''
 
 # test User scneario
-
+'''
 @on_platforms()
 class myuw_jbothell_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
@@ -245,7 +247,7 @@ class myuw_jbothell_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
         self.setDate('2013-04-12')
              
 '''
-
+'''
 # jbothell user scenario
 #class myuw_jbothell(SeleniumLiveServerTestCase):
 @on_platforms()
@@ -357,7 +359,169 @@ class myuw_none(myuw_user_scenario, SeleniumLiveServerTestCase):
             record = records['none']
         )
         self.username = 'none'
+'''
 
+
+@on_platforms()
+class myuw_none_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = 'Registration: Spring 2013', 
+            tuition = {'balance' : False, 'due' : 'future'},
+            HFS = (), 
+            records = records['none'],
+            noregfound = True,
+        )
+        self.username = 'none'
+        self.setDate('2013-02-01')
+
+@on_platforms()
+class myuw_none_date2(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = 'Registration: Spring 2013', 
+            tuition = {'balance' : False, 'due' : 'future'},
+            HFS = (), 
+            records = records['none'],
+            noregfound = True,
+        )
+        self.username = 'none'
+        self.setDate('2013-02-15')
+
+
+@on_platforms()
+class myuw_none_date3(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = 'Registration: Spring 2013', 
+            tuition = {'balance' : False, 'due' : 'future'},
+            HFS = (), 
+            records = records['none'],
+            noregfound = True,
+        )
+        self.username = 'none'
+        self.setDate('2013-03-04')
+
+@on_platforms()
+class myuw_none_date4(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = False,
+            tuition = {'balance' : False, 'due' : 'future'},
+            HFS = (), 
+            records = records['none'],
+            noregfound = True,
+        )
+        self.username = 'none'
+        self.setDate('2013-03-11')
+
+@on_platforms()
+class myuw_none_date5(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = False,
+            tuition = {'balance' : False, 'due' : 'future'},
+            HFS = (), 
+            records = records['none'],
+            noregfound = True,
+        )
+        self.username = 'none'
+        self.setDate('2013-04-01')
+
+@on_platforms()
+class myuw_none_date6(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = 'Registration: Summer 2013',
+            tuition = {'balance' : False, 'due' : 'future'},
+            HFS = (), 
+            records = records['none'],
+            noregfound = True,
+        )
+        self.username = 'none'
+        self.setDate('2013-04-08')
+
+@on_platforms()
+class myuw_none_date7(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = ['Registration: Summer 2013'],
+            tuition = {'balance' : False, 'due' : 'future'},
+            HFS = (), 
+            records = records['none'],
+            noregfound = True,
+        )
+        self.username = 'none'
+        self.setDate('2013-04-22')
+
+@on_platforms()
+class myuw_none_date8(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = ['Registration: Autumn 2013','Registration: Summer 2013'],
+            tuition = {'balance' : False, 'due' : 'future'},
+            HFS = (), 
+            records = records['none'],
+            noregfound = True,
+        )
+        self.username = 'none'
+        self.setDate('2013-05-23')
+
+@on_platforms()
+class myuw_none_date9(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = 'Registration: Autumn 2013',
+            tuition = {'balance' : False, 'due' : 'future'},
+            HFS = (), 
+            records = records['none'],
+            noregfound = True,
+        )
+        self.username = 'none'
+        self.setDate('2013-05-30')
+
+
+@on_platforms()
+class myuw_none_date10(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = False,
+            tuition = {'balance' : False, 'due' : 'future'},
+            HFS = (), 
+            records = records['none'],
+            noregfound = True,
+        )
+        self.username = 'none'
+        self.setDate('2013-07-01')
+
+
+@on_platforms()
+class myuw_none_date11(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = ['Registration: Winter 2014'],
+            tuition = {'balance' : False, 'due' : 'future'},
+            HFS = (), 
+            records = records['none'],
+            noregfound = True,
+        )
+        self.username = 'none'
+        self.setDate('2013-10-25')
+
+@on_platforms()
+class myuw_none_date12(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = False,
+            tuition = {'balance' : False, 'due' : 'future'},
+            HFS = (), 
+            records = records['none'],
+            noregfound = True,
+        )
+        self.username = 'none'
+        self.setDate('2013-12-02')
+
+'''
 @on_platforms()
 class myuw_eight(myuw_user_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
