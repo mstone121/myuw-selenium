@@ -102,6 +102,7 @@ class myuw_base_scenario():
     # the tests to run in your normal display or create
     # a fake display. 
     def setUpExtra(self):
+        self.dateStr = '2013-04-15'
         self.longMessage = True
         #self.driver = webdriver.Chrome()
         self.driver.maximize_window()
@@ -138,11 +139,11 @@ class myuw_base_scenario():
         driver = self.driver
         driver.get(self.user.admin)
         #self.assertIn('User Service', driver.title)
-        time.sleep(2)
+        time.sleep(1)
 
         namebox = driver.find_element_by_name('override_as')
         namebox.send_keys(username + Keys.RETURN)
-        time.sleep(1)
+        time.sleep(.5)
         #time.sleep(100)
 
     # Function to navigate to landing page
@@ -152,7 +153,6 @@ class myuw_base_scenario():
         time.sleep(3)
         self.assertIn('MyUW', driver.title)
         self.assertIn('Mobile', driver.title)
-        time.sleep(3)
         pagetext = driver.find_element_by_tag_name('body').text
         self.assertNotIn('CSRF', pagetext, 'CSRF Verification Failed')
         #self.assertIn('MyUW Mobile Main page', driver.title)
@@ -172,6 +172,7 @@ class myuw_base_scenario():
         e = d.find_element_by_xpath('//input[@name="date"]')
         e.send_keys(date + '\n')
         time.sleep(.5)
+        self.dateStr = date
 
 
 class myuw_user_scenario(myuw_base_scenario):
@@ -520,6 +521,7 @@ class myuw_none_date12(myuw_date_scenario, SeleniumLiveServerTestCase):
         )
         self.username = 'none'
         self.setDate('2013-12-02')
+
 
 '''
 @on_platforms()

@@ -611,6 +611,32 @@ class testUser():
                 except selenium.common.exceptions.NoSuchElementException:
                     self.test.fail('Could not find resource links on card')               
 
+    def check_card_order(self):
+
+
+        expected = (
+            'FinalExamCard',
+            'GradeCard',
+            'FutureQuarterCardA',
+            'RegStatusCard',
+            'VisualScheduleCard',
+            'CourseCard',
+            'HFSCard',
+            'TuitionCard',
+            'LibraryCard',
+            'AcademicCard',
+            'FutureQuarterCard1'
+        )
+
+        el = self.driver.find_elements_by_xpath('//div[@id="landing_content"]/div')
+        
+        for i in range(len(el)):
+            e = el[i]
+            actualName = e.get_attribute('id')
+            expectedName = expected[i]
+            self.test.assertEqual(expectedName, actualName)
+        
+
 
     all_tests = (
         #check_notices_count, 
@@ -645,5 +671,7 @@ class testUserDate(testUser):
         #testUser.all_tests[7], 
         #testUser.all_tests[9],
         #testUser.all_tests[10],
-        testUser.all_tests[11], 
+        #testUser.all_tests[11], 
+        testUser.check_grade_card,
+        testUser.check_card_order,
     )
