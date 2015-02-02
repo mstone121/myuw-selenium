@@ -362,7 +362,6 @@ class myuw_none(myuw_user_scenario, SeleniumLiveServerTestCase):
         self.username = 'none'
 '''
 
-
 @on_platforms()
 class myuw_none_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
@@ -521,6 +520,81 @@ class myuw_none_date12(myuw_date_scenario, SeleniumLiveServerTestCase):
         )
         self.username = 'none'
         self.setDate('2013-12-02')
+
+
+@on_platforms()
+class myuw_javerage_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = False,
+            noregfound = False
+            
+        )
+        self.username = 'javerage'
+        self.setDate('2013-07-01')
+
+@on_platforms()
+class myuw_javerage_date2(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = False,
+            noregfound = False,
+            futureQtrs = ['Spring 2013']
+            
+        )
+        self.username = 'javerage'
+        self.setDate('2013-02-15')
+
+@on_platforms()
+class myuw_javerage_date3(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = False,
+            noregfound = False,
+            futureQtrs = []
+            
+        )
+        self.username = 'javerage'
+        self.setDate('2013-04-01')
+
+@on_platforms()
+class myuw_javerage_date4(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = False,
+            noregfound = False,
+            futureQtrs = ['Summer 2013 A-Term', 'Summer 2013 B-Term', 'Autumn 2013']
+            
+        )
+        self.username = 'javerage'
+        self.setDate('2013-04-08')
+
+@on_platforms()
+class myuw_javerage_date5(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = False,
+            noregfound = False,
+            futureQtrs = ['Autumn 2013',]
+            
+        )
+        self.username = 'javerage'
+        self.setDate('2013-06-24')
+
+@on_platforms()
+class myuw_javerage_date6(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = False,
+            noregfound = False,
+            futureQtrs = []
+            
+        )
+        self.username = 'javerage'
+        self.setDate('2013-09-25')
+
+
+
 
 
 '''

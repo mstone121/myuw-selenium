@@ -280,6 +280,17 @@ class testUser():
             if self.fq_fall:
                 self.test.assertIn('Autumn 2013', fqnames, 'Missing Autmn card')
 
+        if self.futureQtrs:
+            cards = self.driver.find_elements_by_xpath('//div[@data-name="FutureCard"]')
+            fqnames = []
+            for card in cards:
+                try:
+                    fqnames.append(card.find_element_by_tag_name('h4').text)
+                except selenium.common.exceptions.NoSuchElementException: 
+                    self.test.fail('h4 on future quarter card missing')
+
+            self.test.assertEqual(self.futureQtrs, fqnames)
+
     def check_notices_page(self):
         # Not doing this yet because it's broken so the exact expected data
         # is unknown
@@ -674,4 +685,5 @@ class testUserDate(testUser):
         #testUser.all_tests[11], 
         testUser.check_grade_card,
         testUser.check_card_order,
+        testUser.check_future_quarters,
     )
