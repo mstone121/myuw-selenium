@@ -231,6 +231,9 @@ class myuw_none(myuw_user_scenario, SeleniumLiveServerTestCase):
             record = records['none']
         )
         self.username = 'none'
+
+'''
+'''
 @on_platforms()
 class myuw_none_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
@@ -389,7 +392,7 @@ class myuw_none_date12(myuw_date_scenario, SeleniumLiveServerTestCase):
         )
         self.username = 'none'
         self.setDate('2013-12-02')
-
+'''
 
 @on_platforms()
 class myuw_javerage_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
@@ -464,7 +467,6 @@ class myuw_javerage_date6(myuw_date_scenario, SeleniumLiveServerTestCase):
 
 
 '''
-
 @on_platforms()
 class myuw_eight(myuw_user_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
@@ -495,6 +497,7 @@ class myuw_eight(myuw_user_scenario, SeleniumLiveServerTestCase):
 
         self.username = 'eight'
 # TODO: tuition due date stuff
+'''
 '''
 # Test suites:
 mock_users = (myuw_eight, myuw_jinter, myuw_none, myuw_jnew, myuw_javerage, myuw_jbothell)

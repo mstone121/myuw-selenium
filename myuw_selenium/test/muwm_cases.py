@@ -9,20 +9,19 @@ from myuw_selenium.test.resourcelinks import resLinks
 from myuw_selenium.test.records import records
 from myuw_selenium.test.academic_card import academic_card_values
 from myuw_selenium.test.grade_card import grade_card_values
+import selenium
 
 
 # User scenario class
 # Each user scenario should subclass this, 
 # and override the postsetup method
 
+# Tests DON'T subclass this. 
+# Rather, they subclass one of the classes that subclasses this one.
+# Scroll down near the bottom
 class myuw_base_scenario():
 
-    #def setUp(self):
-    #    self.setUpExtra()
     # Create driver, maximize window. 
-    # TODO: Make it automatically detect whether you want
-    # the tests to run in your normal display or create
-    # a fake display. 
     def setUpExtra(self):
         self.dateStr = '2013-04-15'
         self.longMessage = True
@@ -99,9 +98,12 @@ class myuw_base_scenario():
         time.sleep(.5)
         self.dateStr = date
 
+    # Check the card order
+    # This is always the same
+    # All cards are present in the DOM, but are shown/hidden as needed
+    # For example, with the Future Quater Card, it will appear either
+    # near the top or at the bottom depending on the date
     def check_card_order(self):
-
-
         expected = (
             'FinalExamCard',
             'GradeCard',
@@ -508,7 +510,7 @@ class myuw_base_scenario():
                     self.assertEqual(streetAddress[2][0:3], address['zip'])
 
 
-
+    # Check the academic card
     def check_academic_card(self):
         if self.user.academic_card:
             try:
@@ -556,6 +558,9 @@ class myuw_base_scenario():
                 except selenium.common.exceptions.NoSuchElementException:
                     self.fail('Could not find resource links on card')
 
+    # Check the data on the Final grades card
+    # Looks for the "GradeCard" id
+    # Extracts data from it, compares it to expected data
     def check_grade_card(self):
         if self.user.grade_card:
             try:
@@ -653,22 +658,16 @@ class myuw_base_scenario():
                     self.fail('Could not find resource links on card')               
 
 
+# These are the classes that a test scenario should actually subclass
+# Each one of them pulls the desired check_X functions from above, 
+# and calls it test_check_X so that the test framework will consider
+# it to be a test. 
+
+# Class for normal user scenarios (test a lot of things)
 class myuw_user_scenario(myuw_base_scenario):
-    # Unit test framework has some quirks so this
-    # is a workaround. 
-    # If you run a test class, the _testMethodName will
-    # be set correctly. If you run a test directly, then it
-    # will pick up the name of the function that it actually
-    # runs, which in this case is g_test_call_func. 
-    # You have to make a proxy function and give it a name. 
-    # No, copying doesn't work for this, the __name__ will
-    # still be shared with the original. 
-
-
-    
     # Which tests to run
     tests = (
-        'notices_count',
+        #'notices_count',
         'email_link',
         'reg_card',
         'schedule',
@@ -688,14 +687,8 @@ class myuw_user_scenario(myuw_base_scenario):
 
     for testname in tests:
         vars()['test_check_' + testname] = getattr(myuw_base_scenario, 'check_' + testname)
-        
-        
 
-
-
-
-
-
+# Class for date testing scenarios (test mainly date-dependent stuff)
 class myuw_date_scenario(myuw_base_scenario):
 
     tests = (
