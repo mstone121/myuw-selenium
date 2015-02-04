@@ -56,6 +56,7 @@ from myuw_selenium.test.records import records
 from myuw_selenium.test.academic_card import academic_card_values
 from myuw_selenium.test.grade_card import grade_card_values
 
+from muwm_cases import myuw_user_scenario, myuw_date_scenario
 
 # Set up a virtual display if we're on a supported system
 # and the DISPLAY variable does not appear to be set. 
@@ -89,138 +90,10 @@ def g_test_call_func(self):
     name = self._testMethodName[5:]
     return getattr(self.user, name)()
     
-# User scenario class
-# Each user scenario should subclass this, 
-# and override the postsetup method
 
-class myuw_base_scenario():
-
-    #def setUp(self):
-    #    self.setUpExtra()
-    # Create driver, maximize window. 
-    # TODO: Make it automatically detect whether you want
-    # the tests to run in your normal display or create
-    # a fake display. 
-    def setUpExtra(self):
-        self.dateStr = '2013-04-15'
-        self.longMessage = True
-        #self.driver = webdriver.Chrome()
-        self.driver.maximize_window()
-        self.action = ActionChains(self.driver)
-        # Remove size limit from diffs, useful for 
-        # seeing issues with resource pages
-        self.maxDiff = None
-        self.usenetid = False
-        # The postsetup method is where
-        # individual user test classes should
-        # define their user and settings
-        self.postsetup()
-
-        # Weblogin
-        if self.usenetid:
-            self.netidlogin()
-        
-        # Override
-        if self.username:
-            self.chguser(self.username)
-        
-        # Browse landing, most tests expect to be there
-        self.browse_landing()
-
-    # This is the function that should be overridden in
-    # individual user scenarios. 
-    # Each US needs to give a user object and a username
-    def postsetup(self):
-        self.user = testUser(self.driver, self)
-        self.username = ''
-
-    # Function to override the username
-    def chguser(self, username):
-        driver = self.driver
-        driver.get(self.user.admin)
-        #self.assertIn('User Service', driver.title)
-        time.sleep(1)
-
-        namebox = driver.find_element_by_name('override_as')
-        namebox.send_keys(username + Keys.RETURN)
-        time.sleep(.5)
-        #time.sleep(100)
-
-    # Function to navigate to landing page
-    def browse_landing(self, username = None):
-        driver = self.driver
-        driver.get(self.user.landing)
-        time.sleep(3)
-        self.assertIn('MyUW', driver.title)
-        self.assertIn('Mobile', driver.title)
-        pagetext = driver.find_element_by_tag_name('body').text
-        self.assertNotIn('CSRF', pagetext, 'CSRF Verification Failed')
-        #self.assertIn('MyUW Mobile Main page', driver.title)
-
-    # Function to browse a resources page
-    # respath is the part of the URL after
-    # /resource/
-    def browse_resources(self, respath):
-        d = self.driver
-        d.get(self.user.res % respath)
-        time.sleep(2)
-
-    def setDate(self, date):
-        d = self.driver
-        d.get(self.user.dates)
-        time.sleep(.5)
-        e = d.find_element_by_xpath('//input[@name="date"]')
-        e.send_keys(date + '\n')
-        time.sleep(.5)
-        self.dateStr = date
-
-
-class myuw_user_scenario(myuw_base_scenario):
-    # Unit test framework has some quirks so this
-    # is a workaround. 
-    # If you run a test class, the _testMethodName will
-    # be set correctly. If you run a test directly, then it
-    # will pick up the name of the function that it actually
-    # runs, which in this case is g_test_call_func. 
-    # You have to make a proxy function and give it a name. 
-    # No, copying doesn't work for this, the __name__ will
-    # still be shared with the original. 
-    
-    g_test_call_func = g_test_call_func
-    _test_fast  = _test_fast
-
-
-    for gtestfunc in testUserDate.all_tests:
-        fclone = lambda *args: g_test_call_func(*args)
-        fclone.__name__ = 'test_' + gtestfunc.__name__
-        vars()['test_' + gtestfunc.__name__] = fclone
-
-
-
-class myuw_date_scenario(myuw_base_scenario):
-
-    g_test_call_func = g_test_call_func
-    _test_fast  = _test_fast
-
-
-    for gtestfunc in testUserDate.all_tests:
-        fclone = lambda *args: g_test_call_func(*args)
-        fclone.__name__ = 'test_' + gtestfunc.__name__
-        vars()['test_' + gtestfunc.__name__] = fclone
-
-    
 
 
 # Mock data user scenarios
-
-'''
-@on_platforms()
-class myuw_testuser(SeleniumLiveServerTestCase):
-    def test_blanktest(self):
-        pass
-    '''
-
-# test User scneario
 '''
 @on_platforms()
 class myuw_jbothell_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
@@ -247,8 +120,6 @@ class myuw_jbothell_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
         self.username = 'jbothell'
         self.setDate('2013-04-12')
              
-'''
-'''
 # jbothell user scenario
 #class myuw_jbothell(SeleniumLiveServerTestCase):
 @on_platforms()
@@ -360,8 +231,6 @@ class myuw_none(myuw_user_scenario, SeleniumLiveServerTestCase):
             record = records['none']
         )
         self.username = 'none'
-'''
-
 @on_platforms()
 class myuw_none_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
@@ -594,10 +463,8 @@ class myuw_javerage_date6(myuw_date_scenario, SeleniumLiveServerTestCase):
         self.setDate('2013-09-25')
 
 
-
-
-
 '''
+
 @on_platforms()
 class myuw_eight(myuw_user_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
@@ -627,7 +494,6 @@ class myuw_eight(myuw_user_scenario, SeleniumLiveServerTestCase):
         )
 
         self.username = 'eight'
-'''
 # TODO: tuition due date stuff
 '''
 # Test suites:
