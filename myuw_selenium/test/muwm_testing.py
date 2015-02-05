@@ -94,7 +94,7 @@ def g_test_call_func(self):
 
 
 # Mock data user scenarios
-'''
+
 @on_platforms()
 class myuw_jbothell_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
@@ -120,6 +120,7 @@ class myuw_jbothell_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
         self.username = 'jbothell'
         self.setDate('2013-04-12')
              
+'''
 # jbothell user scenario
 #class myuw_jbothell(SeleniumLiveServerTestCase):
 @on_platforms()
@@ -150,7 +151,6 @@ class myuw_jbothell(myuw_user_scenario, SeleniumLiveServerTestCase):
     
     def test_blah(self):
         pass
-
 # javerage user scenario
 @on_platforms()
 class myuw_javerage(myuw_user_scenario, SeleniumLiveServerTestCase):
@@ -180,7 +180,6 @@ class myuw_javerage(myuw_user_scenario, SeleniumLiveServerTestCase):
         )
         # TODO: Add textbooks
         self.username = 'javerage'
-
 @on_platforms()
 class myuw_jinter(myuw_user_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
@@ -213,7 +212,7 @@ class myuw_jnew(myuw_user_scenario, SeleniumLiveServerTestCase):
             vSchedule = True,
             courses = ('TRAIN 101 A',),
             #tuition = 'nopast',
-            HFS = ('din',),
+            HFS = ('stu', 'din'),
             library = True,
             libraryfine = '$10.00',
             resources = resLinks['seattle'],
@@ -231,9 +230,8 @@ class myuw_none(myuw_user_scenario, SeleniumLiveServerTestCase):
             record = records['none']
         )
         self.username = 'none'
+'''
 
-'''
-'''
 @on_platforms()
 class myuw_none_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
@@ -392,7 +390,6 @@ class myuw_none_date12(myuw_date_scenario, SeleniumLiveServerTestCase):
         )
         self.username = 'none'
         self.setDate('2013-12-02')
-'''
 
 @on_platforms()
 class myuw_javerage_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
@@ -474,7 +471,7 @@ class myuw_eight(myuw_user_scenario, SeleniumLiveServerTestCase):
             critical = 7,
             unread = 10,
             email = emails['gmail'],
-            regcard = True, 
+            regcard = False, 
             reglinks = (links['tts'], links['tqs'], links['reg']),
             schedule = True,
             vSchedule = True,
@@ -498,6 +495,7 @@ class myuw_eight(myuw_user_scenario, SeleniumLiveServerTestCase):
         self.username = 'eight'
 # TODO: tuition due date stuff
 '''
+
 '''
 # Test suites:
 mock_users = (myuw_eight, myuw_jinter, myuw_none, myuw_jnew, myuw_javerage, myuw_jbothell)

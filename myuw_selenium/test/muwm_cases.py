@@ -10,6 +10,7 @@ from myuw_selenium.test.records import records
 from myuw_selenium.test.academic_card import academic_card_values
 from myuw_selenium.test.grade_card import grade_card_values
 import selenium
+from myuw_selenium.platforms import on_platforms, SeleniumLiveServerTestCase
 
 
 # User scenario class
@@ -21,65 +22,73 @@ import selenium
 # Scroll down near the bottom
 class myuw_base_scenario():
 
-    # Create driver, maximize window. 
+    def setUp(self):
+        # We still want to call the original setUp since it gives us the driver and stuff
+        SeleniumLiveServerTestCase.setUp(self)
+        self.setUpExtra()
+
+    # Do our modifications to the test 
     def setUpExtra(self):
+
+        # Default date
         self.dateStr = '2013-04-15'
+
+        # Get longer messages out of the unit test frameworks
         self.longMessage = True
-        #self.driver = webdriver.Chrome()
+
+        # Maximize window
         self.driver.maximize_window()
-        #self.action = ActionChains(self.driver)
+
         # Remove size limit from diffs, useful for 
         # seeing issues with resource pages
         self.maxDiff = None
+
+        # Not really used any more. Used to log in with netid for live or eval data tests. 
         self.usenetid = False
+
         # The postsetup method is where
         # individual user test classes should
         # define their user and settings
         self.postsetup()
 
-        # Laziness for now
-        self.test = self
-
-        # Weblogin
+        # Weblogin if necessary
         if self.usenetid:
             self.netidlogin()
         
-        # Override
+        # Override if necessary
         if self.username:
             self.chguser(self.username)
         
-        # Browse landing, most tests expect to be there
+        # Browse landing, most tests expect to be there when they begin
         self.browse_landing()
 
     # This is the function that should be overridden in
     # individual user scenarios. 
     # Each US needs to give a user object and a username
+    # This is provided as a dummy for legacy reasons. 
     def postsetup(self):
         self.user = testUser(self.driver, self)
         self.username = ''
 
     # Function to override the username
+    # Uses self.user.admin as the url since this might vary
     def chguser(self, username):
         driver = self.driver
         driver.get(self.user.admin)
-        #self.assertIn('User Service', driver.title)
-        time.sleep(1)
-
+        time.sleep(.5)
         namebox = driver.find_element_by_name('override_as')
         namebox.send_keys(username + Keys.RETURN)
         time.sleep(.5)
-        #time.sleep(100)
 
     # Function to navigate to landing page
     def browse_landing(self, username = None):
         driver = self.driver
         driver.get(self.user.landing)
-        time.sleep(3)
+        time.sleep(2.5)
         self.assertIn('MyUW', driver.title)
         self.assertIn('Mobile', driver.title)
         pagetext = driver.find_element_by_tag_name('body').text
         self.assertNotIn('CSRF', pagetext, 'CSRF Verification Failed')
-        #self.assertIn('MyUW Mobile Main page', driver.title)
 
     # Function to browse a resources page
     # respath is the part of the URL after
@@ -87,8 +96,10 @@ class myuw_base_scenario():
     def browse_resources(self, respath):
         d = self.driver
         d.get(self.user.res % respath)
-        time.sleep(2)
+        time.sleep(1.5)
 
+    # Override the date using the new date admin page
+    # New date is stored in self.dateStr
     def setDate(self, date):
         d = self.driver
         d.get(self.user.dates)
@@ -97,6 +108,8 @@ class myuw_base_scenario():
         e.send_keys(date + '\n')
         time.sleep(.5)
         self.dateStr = date
+
+    # End of set up, beginning of actual testing functions
 
     # Check the card order
     # This is always the same
@@ -118,6 +131,7 @@ class myuw_base_scenario():
             'FutureQuarterCard1'
         )
 
+        # All cards fit this xpath
         el = self.driver.find_elements_by_xpath('//div[@id="landing_content"]/div')
         
         for i in range(len(el)):
@@ -128,7 +142,7 @@ class myuw_base_scenario():
 
     # Checks to make sure notice counts are correct
     # Known issue: Does not check for a lack of notices on users
-    # who are not supposed to have any
+    # who are not supposed to have any.
     def check_notices_count(self):
         if self.user.critical:
             try:
@@ -148,7 +162,7 @@ class myuw_base_scenario():
             self.assertEqual(numUnread, self.user.unread, 'Incorrect number of unread notices on notice bar')
 
     # Checks to make sure the user has the correct email link
-    # Checks for lack of link for users who do not have it
+    # Checks for lack of link for users who are not supposed to have it
     def check_email_link(self):
         if self.user.email:
             try:
@@ -166,7 +180,7 @@ class myuw_base_scenario():
                 pass
             
     # Checks for presense of registration card, and correct links
-    # on the card
+    # on the card (this part is broken ATM)
     # You can either specify the reg card title as a string, as a list of reg card titles, 
     # or the legacy 'True' value. 
     def check_reg_card(self):
@@ -177,9 +191,9 @@ class myuw_base_scenario():
                 regcard = ['Registration: Summer 2013']
             else:
                 regcard = self.user.regcard
-            #time.sleep(.5) # TODO: do this better
-            el = self.driver.find_elements_by_xpath('//div[@data-name="RegistrationCard"]')
 
+            # Get list of reg cards
+            el = self.driver.find_elements_by_xpath('//div[@data-name="RegistrationCard"]')
             if len(el) != len(regcard):
                 self.fail('Found %s reg cards when %s were expected' %(len(el), len(regcard)))
             
@@ -189,8 +203,9 @@ class myuw_base_scenario():
                 title = e.find_element_by_tag_name('h3').text
                 self.assertEqual(title, card)
 
+        # If the user is not supposed to have a reg card (self.user.regcard bools to false), 
+        # make sure there isn't one present. 
         else:
-
             el = self.driver.find_elements_by_xpath('//div[@data-name="RegistrationCard"]')
             if len(el) > 0:
                 self.fail('Found reg card(s) when none were expected')
@@ -199,13 +214,16 @@ class myuw_base_scenario():
             #if self.reglinks:
             #    links = e.find_elements_by_xpath('./div/div/ul[@class="reg-resources-list"]//a')
             #    for i in range(0, len(self.reglinks)):
-            #        self.test.assertEqual(self.reglinks[i].text, links[i].text, 'Registration card link had the wrong text')
-            #        self.test.assertEqual(self.reglinks[i].url, links[i].get_attribute('href'), 'Registration card link had the wrong URL')
+            #        self.assertEqual(self.reglinks[i].text, links[i].text, 'Registration card link had the wrong text')
+            #        self.assertEqual(self.reglinks[i].url, links[i].get_attribute('href'), 'Registration card link had the wrong URL')
 
         
 
     # Checks to make sure course cards are as expected
     def check_schedule(self):
+
+        # Puts found course names in a list
+        # Makes sure this list equals the expected values
         if self.user.schedule:
             courseCards = []
             cards = self.driver.find_elements_by_xpath('//div[@id="CourseCard"]//div[@class="card"]')
@@ -224,7 +242,6 @@ class myuw_base_scenario():
     # Make sure nothing unexpected appears on the vis sched
     def check_visual_schedule(self):
         if self.user.vSchedule:
-            #vsched = self.driver.find_element_by_xpath('//div[@class="visual-schedule twelve-hour"]')
             try:
                 vsched = self.driver.find_element_by_class_name('visual-schedule')
             except selenium.common.exceptions.NoSuchElementException:
@@ -232,7 +249,6 @@ class myuw_base_scenario():
             for course in vsched.find_elements_by_xpath('.//div[@class="visual-course"]'):
                 courseTitle = course.find_element_by_tag_name('div').text
                 self.assertIn(courseTitle, self.user.vcourses, 'Visual schedule did not have the correct courses')
-                # TODO: Check to make sure course card has the correct links
 
     # Checks to make sure we have the right husky card balances in the HFS card
     def check_HFS(self):
@@ -244,7 +260,6 @@ class myuw_base_scenario():
             hfsnames_actual = []
             for e in huskycards:
                 hfsnames_actual.append(e.text)
-
             self.assertEqual(hfsnames_actual, hfsnames_expected, 'HFS card contained the wrong husky cards')
 
     # Checks the library card for the correct number of holds and
@@ -270,8 +285,9 @@ class myuw_base_scenario():
                 try:
                     self.assertEqual(int(holdParts[0]), self.user.libraryholds, 'Number of library holds was incorrect')
                 except ValueError:
-                    self.fail('Wrong format on library card for requested items ready')
+                    self.fail('Wrong format on library card for requested items ready. May not actually be a failure.')
 
+            # User has library items checked out
             if self.user.libraryout:
                 try:
                     outText = libcard.find_element_by_xpath('./div/div/div[contains(., "Items out")]').text
@@ -282,6 +298,8 @@ class myuw_base_scenario():
                 numout = int(outParts[1].split()[0])
                 self.assertEqual(numout, self.user.libraryout, 'Number of library items checked out was wrong')
 
+            # User has a library fine
+            # If the user shouldn't have one, it makes sure they don't
             if self.user.libraryfine:
                 try:
                     libcard.find_element_by_xpath('.//span[contains(., "%s")]' %self.user.libraryfine)
@@ -296,6 +314,8 @@ class myuw_base_scenario():
             
     # Check for correct future quarters
     def check_future_quarters(self):
+        # This is the old style test. 
+        # You manually set fq_<quartername> to True and it checks for it.
         if self.user.fq_summera or self.user.fq_summerb or self.user.fq_fall:
             cards = self.driver.find_elements_by_xpath('//div[@data-name="FutureCard"]')
             fqnames = []
@@ -312,6 +332,8 @@ class myuw_base_scenario():
             if self.user.fq_fall:
                 self.assertIn('Autumn 2013', fqnames, 'Missing Autmn card')
 
+        # This is the new style test. You simply supply the names of the expected
+        # future quarters. Any extraneous cards found will case the test to fail. 
         if self.user.futureQtrs:
             cards = self.driver.find_elements_by_xpath('//div[@data-name="FutureCard"]')
             fqnames = []
@@ -328,7 +350,7 @@ class myuw_base_scenario():
         # is unknown
         pass
 
-    # Check for any generic error messages
+    # Check for any generic error cards
     def check_for_errors(self):
         try:
             e = self.driver.find_element_by_class_name('error-card')
@@ -336,13 +358,19 @@ class myuw_base_scenario():
         except selenium.common.exceptions.NoSuchElementException: 
             pass
 
-    # Check for "No registration found" message
+    # Check for "No registration found" message if expected
     def check_noreg(self):
         if self.user.noregfound:
             try: 
                 self.driver.find_element_by_class_name('no_courses_dupe_blocker')
             except selenium.common.exceptions.NoSuchElementException: 
                 self.fail('Could not find "No Registration Found" message')
+        else:
+            try: 
+                self.driver.find_element_by_class_name('no_courses_dupe_blocker')
+                self.fail('Found "No Registration Found" card when not expected. ')
+            except selenium.common.exceptions.NoSuchElementException: 
+                pass
 
     # Check resources links
     def check_resources(self):
@@ -680,7 +708,7 @@ class myuw_user_scenario(myuw_base_scenario):
         'noreg',
         'resources',
         'tuition',
-        'records',
+        #'records',
         'academic_card',
         'grade_card',
     )
