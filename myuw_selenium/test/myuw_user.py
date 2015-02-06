@@ -8,19 +8,56 @@ import selenium.common.exceptions
 import time
 
 # Class for a user
+# MyUW test user class
+# This constructor assumes sensible defaults for anything not
+# explicitly defined, as shown below
+# Arguments:
+# driver: the driver to use. Not used anymore. 
+# test: the test object to use. Not used anymore. 
+# urlbase: the base URL to use to construct the other URLs
+# critical: number of critical notices
+# unread: number of unread notices
+# email: which email link the user should have. These are in mudata.py
+# regcard: either a regcard to look for (the title of the card), or a list of titles to check for. 
+# regholds: number of holds on registration
+# reglinks: registration card links to check for. Should be link objects. 
+# schedule: whether the user has a current schedule or not
+#    If schedule is true, then it is expected that you will supply 'courses'
+# courses: list of course names to check for, e.g. 'BCWRIT 500 A'
+# futureQrts: list of future quarters to check for, in the order they would appear on the page, eg ['Spring 2013']
+# vSchedule: whether to check for vis schedule or not
+#    This checks to make sure the courses found on the vsched are the same as those in 'courses'
+# noregfound: whether or not the user should have a 'no registration found' card
+# resources: what resource links the user should have
+#    These are in resourcelinks.py
+# record: Whether to check for myrecords. Either False to not check, or a records object which the other Matt did so I have no clue what the correct format is. 
+# academic card: either False to not check, or a dictionary with stuff
+# grade_card: see above
+# tuition: same
+# HFS: what HFS cards the user should have (or False to note check). 
+#    Values are 'stu' (student), 'din' (dining), and 'staff'. 
+# library: Whether or not there should be a library card
+# libraryholds: # of library holds
+# libraryout: # of checked out items
+# libraryfine: whether or not the user has a library fine 
+# regMsgs: registration messages
+# textbooks: name of classes for which the user should have textbooks
+#    same format as courses
+# fq_fall: classes for future quarter fall
+# fq_summera, fq_summerb: as above
+
 class testUser():
     def __init__(self, driver, test, **kwargs):
+        
         self.driver = driver
         self.test = test
-
         self.urlbase = test.live_server_url
 
-        # This is a hacky way of doing this but it beats typing everything twice    
+        # Default values
         self.critical = 0
         self.unread = 0
         self.email = False
         self.regcard = False
-        self.regcard2 = False
         self.regholds = 0
         self.reglinks = ()
         self.schedule = False
@@ -49,10 +86,13 @@ class testUser():
         self.fq_summerb = ()
 
         # Set everything up from the constructor
+        # Anything not done here will keep its default value from above
+        # Why can't we just set defaults in the arguments for __init__?
+        # Because those won't show up in *args/**kwargs, so we can't
+        # set everything automatically like this. 
         for k, v in kwargs.items():
             if v is not None:
                 setattr(self,k, v)
-            #self.__setattr__(k, v)
         
         # If the landing/admin/resource URL suffixes are 
         # defined, combine them with the urlbase to get the
@@ -97,12 +137,7 @@ class testUser():
 
 
 
-    # Run every check
-    # Comment a line out here if you don't want it to run
-    def run_all_tests(self):
-    # Function to run all individual checks
-        for test in self.all_tests:
-            test(self)
+# Not used yet
 
 class testUserDate(testUser):
     pass

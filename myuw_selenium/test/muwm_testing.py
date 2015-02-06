@@ -22,19 +22,6 @@
 # * Check name and URLs of resource page links
 # TODO: Notices page, tuition 
 
-# Test cases/suites available:
-# * myuw_<user>: Run all tests for a user
-# * myuw_<user>.test: Run a particular test for a user
-# * myuw_<user>._test_fast: Run all tests for that user 
-#        combined into one test. Executes faster, but will
-#        stop on first failed test
-# * myuw_mock: Run all tests on mock data users
-# * myuw_mock_fast: Run fast test on all mock users
-# * myuw_prod: Run all tests on production users
-# * myuw_prod_fast: Run fast test on all prod users
-# If you create more users, be sure to add them to the 
-# appropriate lists at the bottom, just above the suites. 
-
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -46,20 +33,22 @@ import os
 from myuw_selenium.platforms import on_platforms, SeleniumLiveServerTestCase
 
 # Myuw specific stuff
-#import netid
-#from myuw import link
+# Test user classes
 from myuw_selenium.test.myuw_user import testUser, testUserDate
+# General default settings
 from myuw_selenium.test.musettings import *
+# Expected data
 from myuw_selenium.test.mudata import *
 from myuw_selenium.test.resourcelinks import resLinks
 from myuw_selenium.test.records import records
 from myuw_selenium.test.academic_card import academic_card_values
 from myuw_selenium.test.grade_card import grade_card_values
-
+# Test scenario classes
 from muwm_cases import myuw_user_scenario, myuw_date_scenario
 
 # Set up a virtual display if we're on a supported system
 # and the DISPLAY variable does not appear to be set. 
+# Is there a better way to check if the ssytem is using X or not?
 p = sys.platform
 
 if p in ('win32', 'mac', 'darwin'):
@@ -74,26 +63,18 @@ else:
             
 
 
-# Function to run all individual checks quickly
-# (without restarting browser every time)
-def _test_fast(self):
-    if self.__class__ != myuw_user_scenario:
-        #self.browse_landing()
-        self.user.run_all_tests()
-
-
-# Function to run an individual test
-# Hacks required due to tests providing a test
-# object but the check_* functions requiring
-# the user object
-def g_test_call_func(self):
-    name = self._testMethodName[5:]
-    return getattr(self.user, name)()
-    
-
-
-
 # Mock data user scenarios
+
+# Format for a scenario:
+# @on_platforms() # Creates a copy of the test for every browser we test on
+# class class_name(base_scenario, SeleniumLiveServerTestCase): 
+# # base_scenario is the base test case, such as myuw_user_scenario, 
+# # or myuw_date_scenario
+#     def postsetup
+#         self.user = testUser(self.driver, self, args...) # See myuw_user.py for docs
+#         self.username = 'netidGoesHere'
+#         self.setDate('yyyy-mm-dd') # Optional
+
 
 @on_platforms()
 class myuw_jbothell_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
@@ -494,30 +475,6 @@ class myuw_eight(myuw_user_scenario, SeleniumLiveServerTestCase):
 
         self.username = 'eight'
 # TODO: tuition due date stuff
-'''
-
-'''
-# Test suites:
-mock_users = (myuw_eight, myuw_jinter, myuw_none, myuw_jnew, myuw_javerage, myuw_jbothell)
-test_one = (myuw_javerage,)
-
-def myuw_mock_fast():
-    suite = unittest.TestSuite()
-    for c in mock_users:
-        suite.addTest(c('_test_fast'))
-    return(suite)
-
-def myuw_mock():
-    suite = unittest.TestSuite()
-    for c in mock_users:
-        suite.addTests(unittest.TestLoader().loadTestsFromTestCase(c))
-    return(suite)
-
-def myuw_test_one():
-    suite = unittest.TestSuite()
-    suite.addTests(unittest.TestLoader().loadTestsFromTestCase(test_one[0]))
-    return(suite)
-    
 '''
 if __name__ == "__main__":
     #unittest.main(warnings = 'ignore')
