@@ -110,11 +110,6 @@ class SeleniumLiveServerTestCase(LiveServerTestCase):
             self.setUpLocal()
         else:
             self.setUpSauce()
-        #self.setUpExtra()
-        '''try:
-            self.setUpExtra()
-        except:
-            pass'''
 
     def tearDown(self):
         if RUN_LOCAL:
