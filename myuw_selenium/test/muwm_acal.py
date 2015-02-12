@@ -165,9 +165,14 @@ class calScenario(object):
 c = calScenario
 
 # List of scenarios
+# To define a new date to test at, put it here
 dates = [
     c('javerage', '2013-04-15'),
     c('javerage', '2013-05-30'),
+    #c('javerage', ''),
+    #c('javerage', ''),
+    c('javerage', '2013-07-25'),
+    #c('javerage', ''),
 ]
 
 # Create a test class for a particular calScenario
@@ -183,5 +188,7 @@ def createTestClass(scenario):
 # Dynamically generate test classes for each calScenario in dates
 for d in dates:
     vars()['class_' + d.name] = createTestClass(d)[0]
+    # unittest will somehow pick up the test class if we don't
+    # explicitly delete it
     del scenarioClass_1
      

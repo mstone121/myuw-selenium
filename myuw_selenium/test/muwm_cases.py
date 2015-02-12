@@ -32,6 +32,7 @@ class myuw_base_scenario():
 
         # Default date
         self.dateStr = '2013-04-15'
+        self.dateSet = False
 
         # Get longer messages out of the unit test frameworks
         self.longMessage = True
@@ -51,6 +52,8 @@ class myuw_base_scenario():
         # define their user and settings
         self.postsetup()
 
+        if not(self.dateSet):
+            self.setDate(self.dateStr)
         # Weblogin if necessary
         if self.usenetid:
             self.netidlogin()
@@ -108,6 +111,7 @@ class myuw_base_scenario():
         e.send_keys(date + '\n')
         time.sleep(.5)
         self.dateStr = date
+        self.dateSet = True
 
     # End of set up, beginning of actual testing functions
 
@@ -423,7 +427,7 @@ class myuw_base_scenario():
         if self.user.tuition:
             
             try:
-                tc = self.driver.find_element_by_xpath('//div[id="TuitionCard"]')
+                tc = self.driver.find_element_by_xpath('//div[@id="TuitionCard"]')
             except selenium.common.exceptions.NoSuchElementException:
                 self.fail('Tuition card not found when one was expected')
 

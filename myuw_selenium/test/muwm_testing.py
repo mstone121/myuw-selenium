@@ -101,19 +101,16 @@ class myuw_jbothell_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
         self.username = 'jbothell'
         self.setDate('2013-04-12')
              
-'''
+
 # jbothell user scenario
-#class myuw_jbothell(SeleniumLiveServerTestCase):
 @on_platforms()
 class myuw_jbothell(myuw_user_scenario, SeleniumLiveServerTestCase):
-
-
     def postsetup(self):
         self.user = testUser(self.driver, self, 
             critical = 4, 
             unread = 10, 
             email = emails['live'], 
-            regcard = True, 
+            regcard = ['Registration: Autumn 2013'], 
             regholds = 1, 
             reglinks = (links['bts'], links['reg']), 
             schedule = True, 
@@ -140,7 +137,7 @@ class myuw_javerage(myuw_user_scenario, SeleniumLiveServerTestCase):
             critical = 5, 
             unread = 11, 
             email = emails['gmail'], 
-            regcard = True, 
+            regcard = False, 
             regholds = 1, 
             reglinks = (links['sts'], links['reg']), 
             schedule = True, 
@@ -168,9 +165,10 @@ class myuw_jinter(myuw_user_scenario, SeleniumLiveServerTestCase):
             critical = 4,
             unread = 13, 
             email = False,
-            regcard = False,
+            regcard = ['Registration: Autumn 2013'],
             schedule = False,
             vSchedule = False,
+            noregfound = True,
             #tuition = 'nofuture',
             HFS = ('staff',),
             library = True,
@@ -188,7 +186,7 @@ class myuw_jnew(myuw_user_scenario, SeleniumLiveServerTestCase):
             critical = 2, 
             unread = 18, 
             email = False,
-            regcard = False,
+            regcard = ['Registration: Autumn 2013'],
             schedule = True,
             vSchedule = True,
             courses = ('TRAIN 101 A',),
@@ -205,14 +203,14 @@ class myuw_jnew(myuw_user_scenario, SeleniumLiveServerTestCase):
 class myuw_none(myuw_user_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
         self.user = testUser(self.driver, self,
-            regcard = True,
+            regcard = ['Registration: Autumn 2013'],
             noregfound = True,
             HFS = (),
             record = records['none']
         )
         self.username = 'none'
 '''
-
+'''
 @on_platforms()
 class myuw_none_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
