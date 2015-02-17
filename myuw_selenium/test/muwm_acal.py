@@ -167,11 +167,18 @@ c = calScenario
 # List of scenarios
 # To define a new date to test at, put it here
 dates = [
+    c('javerage', '2013-01-02'),
+    c('javerage', '2013-01-15'),
     c('javerage', '2013-04-15'),
+    c('javerage', '2013-04-25'),
     c('javerage', '2013-05-30'),
     #c('javerage', ''),
     #c('javerage', ''),
     c('javerage', '2013-07-25'),
+    c('javerage', '2013-12-12'),
+    c('javerage', '2013-12-16'),
+    # This one fails, guess the date is too far forward
+    #c('javerage', '2013-12-24'),
     #c('javerage', ''),
 ]
 

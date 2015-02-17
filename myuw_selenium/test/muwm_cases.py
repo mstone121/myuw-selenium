@@ -453,13 +453,14 @@ class myuw_base_scenario():
     # Returns failure on no profile or incorrect data
     def check_records(self):
         if self.user.record:
-            
+            # Click button to see records
             try:
                 self.driver.find_element_by_id("toggle_my_profile").click()
                 time.sleep(3)
             except selenium.common.exceptions.NoSuchElementException:
                 self.fail('Profile toggle not found when one was expected')
 
+            # Compare expected values to actual values
             if self.user.record['fullname']:
                 try:
                     fullname = self.driver.find_element_by_css_selector("div#my_profile span.profile_name").text
@@ -543,6 +544,8 @@ class myuw_base_scenario():
 
 
     # Check the academic card
+    # Checks for presence of card if expected, and correct class, major,
+    # minor, and links
     def check_academic_card(self):
         if self.user.academic_card:
             try:
@@ -572,6 +575,8 @@ class myuw_base_scenario():
                 except selenium.common.exceptions.NoSuchElementException:
                     self.fail('Could not find minor on academic card')
 
+            # This is currently broken due to needing to click the button to 
+            # expand this section
             try:
                 self.driver.find_element_by_id("toggle_academic_card_resources").click()
             except selenium.common.NoSuchElementException:

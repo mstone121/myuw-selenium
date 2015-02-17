@@ -1,4 +1,7 @@
-# Class for links, with both link text and url
+#!/usr/bin/python
+# Class for commonly used links
+# Uses the link class, which supports both link text and url
+# Also has husky card names
 
 from myuw_selenium.test.myuw import link
 

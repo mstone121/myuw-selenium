@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+# Big dictionary of peoples' records. 
+# This should really be cleaned up and have a records class, but
+# I don't think we'll be changing these tests much so it shouldn't matter. 
 records = {
     'jbothell': {
         'fullname':'Jennifer Britany (JB) Othello',

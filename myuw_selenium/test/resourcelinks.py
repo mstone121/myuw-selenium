@@ -2,6 +2,7 @@
 
 from myuw_selenium.test.myuw import link
 
+# Dictionary of resource links. 
 resLinks = {
     'seattle': {
         'academics' : {

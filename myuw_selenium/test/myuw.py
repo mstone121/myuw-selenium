@@ -2,6 +2,9 @@
 
 from myuw_selenium.test.musettings import *
 
+# Class for a link. Accepts the link text and its url as arguments. 
+# == method checks for both text equality and url equality. 
+# Supports sorting. 
 class link():
     def __init__(self, text, url):
         self.text = text

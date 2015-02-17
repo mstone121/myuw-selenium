@@ -442,6 +442,8 @@ class myuw_javerage_date6(myuw_date_scenario, SeleniumLiveServerTestCase):
         self.setDate('2013-09-25')
 
 
+# Commenting this out for now, there seems to be a mismatch 
+# of data somewhere. 
 '''
 @on_platforms()
 class myuw_eight(myuw_user_scenario, SeleniumLiveServerTestCase):

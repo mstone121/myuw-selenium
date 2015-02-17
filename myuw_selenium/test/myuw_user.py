@@ -46,6 +46,8 @@ import time
 # fq_fall: classes for future quarter fall
 # fq_summera, fq_summerb: as above
 
+# Please note that the actual test functions have been moved to muwm_cases.py
+
 class testUser():
     def __init__(self, driver, test, **kwargs):
         
@@ -138,6 +140,6 @@ class testUser():
 
 
 # Not used yet
-
+# Probably won't use it since there's no real reason to have a different class for this. 
 class testUserDate(testUser):
     pass
