@@ -1,6 +1,7 @@
 from myuw_selenium.platforms import on_platforms, SeleniumLiveServerTestCase
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
+import time
 
 # General Test Class
 class TextbookCardTest():
@@ -25,6 +26,7 @@ class TextbookCardTest():
         element.clear()
         element.send_keys(self.user)
         element.submit()
+        time.sleep(2)
         
     def setDate(self):
         self.driver.get(self.live_server_url + '/mobile/admin/dates/')
@@ -32,6 +34,7 @@ class TextbookCardTest():
         element.clear()
         element.send_keys(self.date)
         element.submit()
+        time.sleep(2)
 
     def getTextbookCardObject(self):
         tbco = self.driver.find_element_by_id("TextbookCard")
@@ -50,7 +53,6 @@ class NoCardTest(TextbookCardTest):
             self.assertFalse(textbook_card_object.is_displayed(), 'Card is displayed')
         except NoSuchElementException:
             pass
-
 
 
 class CardTest(TextbookCardTest):

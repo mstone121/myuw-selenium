@@ -34,7 +34,7 @@ test_data = [
     {'user':'javerage', 'date':'2013-04-05', 'test_name':'javerage_full_page', 'test':FullPageLink },
 
     # No Full Page Textbook Link
-    {'user':'jinter', 'date':'2013-04-05', 'test_name':'jinter_full_page', 'test':NoFullPageLink },
+    {'user':'javerage', 'date':'2013-10-01', 'test_name':'javerage_no_full_page', 'test':NoFullPageLink }
 ]
 
 for test in test_data:
