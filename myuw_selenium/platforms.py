@@ -135,17 +135,11 @@ class SeleniumLiveServerTestCase(LiveServerTestCase):
         self.driver.implicitly_wait(5)
 
     def setUpLocal(self):
-        # Make headless
-        from pyvirtualdisplay import Display
-        self.display = Display(visible=0, size=(800, 600))
-        self.display.start()
-
         self.driver = getattr(webdriver, self.browser)()
         self.driver.implicitly_wait(3)
 
     def tearDownLocal(self):
         self.driver.quit()
-        self.display.stop()
         
 
     def tearDownSauce(self):
