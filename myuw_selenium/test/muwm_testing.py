@@ -110,7 +110,7 @@ class myuw_jbothell(myuw_user_scenario, SeleniumLiveServerTestCase):
             critical = 4, 
             unread = 10, 
             email = emails['live'], 
-            regcard = ['Registration: Autumn 2013'], 
+            regcard = ['Registration: Summer 2013'], 
             regholds = 1, 
             reglinks = (links['bts'], links['reg']), 
             schedule = True, 
