@@ -20,12 +20,16 @@ if RUN_LOCAL:
     # could add Chrome, PhantomJS etc... here
     browsers = ['Firefox']
 
+    p = sys.platform
     if p in ('win32', 'mac', 'darwin'):
         pass
     else:
-        import pyvirtualdisplay
-        vd = pyvirtualdisplay.Display(visible = 0, size = (800, 600))
-        vd.start()
+        if os.environ.get('DISPLAY'):
+            pass
+        else:
+            import pyvirtualdisplay
+            vd = pyvirtualdisplay.Display(visible = 0, size = (800, 600))
+            vd.start()
 
 else:
     try:
