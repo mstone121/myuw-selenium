@@ -165,7 +165,7 @@ class myuw_jinter(myuw_user_scenario, SeleniumLiveServerTestCase):
             critical = 4,
             unread = 13, 
             email = False,
-            regcard = ['Registration: Autumn 2013'],
+            regcard = ['Registration: Summer 2013'],
             schedule = False,
             vSchedule = False,
             noregfound = True,
@@ -186,7 +186,7 @@ class myuw_jnew(myuw_user_scenario, SeleniumLiveServerTestCase):
             critical = 2, 
             unread = 18, 
             email = False,
-            regcard = ['Registration: Autumn 2013'],
+            regcard = ['Registration: Summer 2013'],
             schedule = True,
             vSchedule = True,
             courses = ('TRAIN 101 A',),
@@ -203,7 +203,7 @@ class myuw_jnew(myuw_user_scenario, SeleniumLiveServerTestCase):
 class myuw_none(myuw_user_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
         self.user = testUser(self.driver, self,
-            regcard = ['Registration: Autumn 2013'],
+            regcard = ['Registration: Summer 2013'],
             noregfound = True,
             HFS = (),
             record = records['none']

@@ -126,13 +126,16 @@ class myuw_base_scenario():
             'GradeCard',
             'FutureQuarterCardA',
             'RegStatusCard',
+            'SummerRegStatusCardA',
             'VisualScheduleCard',
+            'TextbookCard',
             'CourseCard',
             'HFSCard',
             'TuitionCard',
             'LibraryCard',
             'AcademicCard',
-            'FutureQuarterCard1'
+            'FutureQuarterCard1',
+            'SummerRegStatusCard1',
         )
 
         # All cards fit this xpath
@@ -715,7 +718,7 @@ class myuw_user_scenario(myuw_base_scenario):
         'notices_page',
         'for_errors',
         'noreg',
-        'resources',
+        #'resources',
         'tuition',
         #'records',
         'academic_card',
