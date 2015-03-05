@@ -1,32 +1,33 @@
 from myuw_selenium.test.textbook_card_lp_c import *
+from myuw_selenium.test.card_tests_c import create_test_from_test
 
 test_data = [ 
     # --Card show/hide
 
     # None, 2013 spring: no card Shown
-    { 'date':'2013-04-05', 'User':'none', 'test_name': 'no_card_for_user_none', 'test': NoCardTest },
+    { 'date':'2013-04-05', 'User':'none', 'test_name': 'no_card_for_user_none', 'test': NoCardShownTest },
 
     # Javerage: card show/hide
     # Spring 2013
-    { 'date':'2013-03-26', 'User':'javerage', 'test_name':'javerage_spring_pre',   'test':NoCardTest },
-    { 'date':'2013-03-27', 'User':'javerage', 'test_name':'javerage_spring_start', 'test':CardTest },
-    { 'date':'2013-04-07', 'User':'javerage', 'test_name':'javerage_spring_end',   'test':CardTest },
-    { 'date':'2013-04-08', 'User':'javerage', 'test_name':'javerage_spring_post',  'test':NoCardTest },
+    { 'date':'2013-03-26', 'User':'javerage', 'test_name':'javerage_spring_pre',   'test':NoCardShownTest },
+    { 'date':'2013-03-27', 'User':'javerage', 'test_name':'javerage_spring_start', 'test':CardShownTest },
+    { 'date':'2013-04-07', 'User':'javerage', 'test_name':'javerage_spring_end',   'test':CardShownTest },
+    { 'date':'2013-04-08', 'User':'javerage', 'test_name':'javerage_spring_post',  'test':NoCardShownTest },
     # Autumn 2013
-    { 'date':'2013-08-27', 'User':'javerage', 'test_name':'javerage_autumn_pre',   'test':NoCardTest },
-    { 'date':'2013-08-28', 'User':'javerage', 'test_name':'javerage_autumn_start', 'test':CardTest },
-    { 'date':'2013-10-01', 'User':'javerage', 'test_name':'javerage_autumn_end',   'test':CardTest },
-    { 'date':'2013-10-02', 'User':'javerage', 'test_name':'javerage_autumn_post',  'test':NoCardTest },
+    { 'date':'2013-08-27', 'User':'javerage', 'test_name':'javerage_autumn_pre',   'test':NoCardShownTest },
+    { 'date':'2013-08-28', 'User':'javerage', 'test_name':'javerage_autumn_start', 'test':CardShownTest },
+    { 'date':'2013-10-01', 'User':'javerage', 'test_name':'javerage_autumn_end',   'test':CardShownTest },
+    { 'date':'2013-10-02', 'User':'javerage', 'test_name':'javerage_autumn_post',  'test':NoCardShownTest },
     # Summer A 2013
-    { 'date':'2013-06-23', 'User':'javerage', 'test_name':'javerage_summer_pre',   'test':NoCardTest },
-    { 'date':'2013-06-24', 'User':'javerage', 'test_name':'javerage_summer_start', 'test':CardTest },
-    { 'date':'2013-06-30', 'User':'javerage', 'test_name':'javerage_summer_end',   'test':CardTest },
-    { 'date':'2013-07-01', 'User':'javerage', 'test_name':'javerage_summer_post',  'test':NoCardTest },
+    { 'date':'2013-06-23', 'User':'javerage', 'test_name':'javerage_summer_pre',   'test':NoCardShownTest },
+    { 'date':'2013-06-24', 'User':'javerage', 'test_name':'javerage_summer_start', 'test':CardShownTest },
+    { 'date':'2013-06-30', 'User':'javerage', 'test_name':'javerage_summer_end',   'test':CardShownTest },
+    { 'date':'2013-07-01', 'User':'javerage', 'test_name':'javerage_summer_post',  'test':NoCardShownTest },
     # Winter 2013
-    { 'date':'2012-12-18', 'User':'javerage', 'test_name':'javerage_winter_pre',   'test':NoCardTest },
-    { 'date':'2012-12-19', 'User':'javerage', 'test_name':'javerage_winter_start', 'test':CardTest },
-    { 'date':'2013-01-13', 'User':'javerage', 'test_name':'javerage_winter_end',   'test':CardTest },
-    { 'date':'2013-01-14', 'User':'javerage', 'test_name':'javerage_winter_post',  'test':NoCardTest },
+    { 'date':'2012-12-18', 'User':'javerage', 'test_name':'javerage_winter_pre',   'test':NoCardShownTest },
+    { 'date':'2012-12-19', 'User':'javerage', 'test_name':'javerage_winter_start', 'test':CardShownTest },
+    { 'date':'2013-01-13', 'User':'javerage', 'test_name':'javerage_winter_end',   'test':CardShownTest },
+    { 'date':'2013-01-14', 'User':'javerage', 'test_name':'javerage_winter_post',  'test':NoCardShownTest },
 
 
     # --Eight: course colors

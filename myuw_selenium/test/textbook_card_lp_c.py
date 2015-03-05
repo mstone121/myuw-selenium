@@ -1,51 +1,19 @@
-from myuw_selenium.platforms import on_platforms, SeleniumLiveServerTestCase
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
+from myuw_selenium.test.card_tests_c import CardTest
 import time
 
 # General Test Class
-class TextbookCardTest():
+class TextbookCardTest(CardTest):
 
     def setUp(self):
-        SeleniumLiveServerTestCase.setUp(self)
+        CardTest.setUp(self)
 
-        # Override functions
-        if hasattr(self, 'user'):
-            self.setUser()
-
-        if hasattr(self, 'date'):
-            self.setDate()
-
-        # Browse to landing page
-        self.driver.get(self.live_server_url + '/mobile/landing')
+        # Card ID
+        self.card_name = "TextbookCard"
 
 
-    def setUser(self):
-        self.driver.get(self.live_server_url + '/users/')
-        element = self.driver.find_element_by_xpath("//input[@name='override_as']")
-        element.clear()
-        element.send_keys(self.user)
-        element.submit()
-        time.sleep(2)
-        
-    def setDate(self):
-        self.driver.get(self.live_server_url + '/mobile/admin/dates/')
-        element = self.driver.find_element_by_xpath("//input[@name='date']")
-        element.clear()
-        element.send_keys(self.date)
-        element.submit()
-        time.sleep(2)
-
-    def getTextbookCardObject(self):
-        tbco = self.driver.find_element_by_id("TextbookCard")
-        # Raise AssertionError if card is not displayed
-        if (not tbco.is_displayed()):
-            raise AssertionError('Card not displayed on landing page')
-
-        return tbco
-
-
-class NoCardTest(TextbookCardTest):
+class NoCardShownTest(TextbookCardTest):
     def _test(self):
         # Check element is not displayed
         try:
@@ -55,17 +23,17 @@ class NoCardTest(TextbookCardTest):
             pass
 
 
-class CardTest(TextbookCardTest):
+class CardShownTest(TextbookCardTest):
     def _test(self):
         # Check for element
-        textbook_card_object = self.getTextbookCardObject()
+        textbook_card_object = self.getCardObject()
         self.assertIsInstance(textbook_card_object, WebElement)
         self.assertTrue(textbook_card_object.is_displayed())
 
 class CoursesTest(TextbookCardTest):
     def _test(self):
         # Get element
-        textbook_card_object = self.getTextbookCardObject()
+        textbook_card_object = self.getCardObject()
 
         # Get course elements
         course_elements = textbook_card_object.find_elements_by_css_selector("span.textbooks-course-title")
@@ -80,7 +48,7 @@ class CoursesTest(TextbookCardTest):
 class BookCountTest(TextbookCardTest):
     def _test(self):
         # Get element
-        textbook_card_object = self.getTextbookCardObject()
+        textbook_card_object = self.getCardObject()
         
         # Get course elements
         course_elements = textbook_card_object.find_elements_by_css_selector("li.textbooks-list-item")
@@ -116,7 +84,7 @@ class CourseColorTest(TextbookCardTest):
             course_colors[course] = course_color
 
         # Get element
-        textbook_card_object = self.getTextbookCardObject()
+        textbook_card_object = self.getCardObject()
 
         # Get course elements
         course_elements = textbook_card_object.find_elements_by_css_selector("li.textbooks-list-item")
@@ -139,7 +107,7 @@ class CourseColorTest(TextbookCardTest):
 class FullPageLink(TextbookCardTest):
     def _test(self):
         # Get element
-        textbook_card_object = self.getTextbookCardObject()
+        textbook_card_object = self.getCardObject()
         
         # Check link exists
         try:
@@ -155,7 +123,7 @@ class FullPageLink(TextbookCardTest):
 class NoFullPageLink(TextbookCardTest):
     def _test(self):
         # Get element
-        textbook_card_object = self.getTextbookCardObject()
+        textbook_card_object = self.getCardObject()
 
         with self.assertRaises(NoSuchElementException):
             ael = textbook_card_object.find_element_by_css_selector("a.show_textbooks")
@@ -164,7 +132,7 @@ class NoFullPageLink(TextbookCardTest):
 class CourseTest(TextbookCardTest):
     def _test(self):
     # Get element
-        textbook_card_object = self.getTextbookCardObject()
+        textbook_card_object = self.getCardObject()
 
         course_elements = textbook_card_object.find_elements_by_css_selector("li.textbooks-list-item")
 
@@ -184,61 +152,3 @@ class CourseTest(TextbookCardTest):
                 if self.required:
                     required = element.find_element_by_css_selector("span.textbooks-course-required").text
                     self.assertEqual(required[1], str(self.required))
-            
-
-
-# Helper Functions
-def create_test_class(_class):
-
-    @on_platforms()
-    class TextbookCardTestWithData(_class, SeleniumLiveServerTestCase):
-        def __str__(self):
-            return _class.__name__ + ": " + self.test_name
-
-    return [TextbookCardTestWithData_1]
-
-
-def create_tests_from_test_data(test_data, test_type):
-
-    tests = []
-    for data in test_data:
-        test_classes = create_test_class(test_type)
-        
-        index = 1
-        for _test in test_classes:
-            # Rename testn
-            setattr(_test, 'test_' + data['test_name'], test_type._test)
-
-            # Set attributes
-            for key in data.keys():
-               setattr(_test, key, data[key])
-
-            # Add to tests
-            tests.append(_test)
-            index += 1
-
-    return tests
-
-def create_test_from_test(data):
-    tests = [] 
-    
-    # Get test class
-    _class = data['test']
-    del data['test']
-
-    test_classes = create_test_class(_class)
-
-    index = 1
-    for _test in test_classes:
-        # Rename testn
-        setattr(_test, 'test_' + data['test_name'], _class._test)
-        
-        # Set attributes
-        for key in data.keys():
-            setattr(_test, key, data[key])
-
-        # Add to tests
-        tests.append(_test)
-        index += 1
-        
-    return tests
