@@ -604,98 +604,104 @@ class myuw_base_scenario():
     def check_grade_card(self):
         if self.user.grade_card:
             try:
-                self.driver.find_element_by_id("GradeCard")
+                gcElement = self.driver.find_element_by_id("GradeCard")
             except selenium.common.exceptions.NoSuchElementException:
                 self.fail('Could not find grade card')
 
-            if 'courses' in self.user.grade_card:
-                # Check Course Titles
-                try:
-                    courseElements = self.driver.find_elements_by_css_selector("div#GradeCard div.pull-left span.card-badge-inline-label")
-                    courseTitles = []
-                    for element in courseElements:
-                        courseTitles.append(element.text)
-                    
-                    expectedCourses = self.user.grade_card['courses'].keys()
-                    self.assertEqual(courseTitles.sort(), expectedCourses.sort())
-                except selenium.common.exceptions.NoSuchElementException:
-                    self.fail('Could not get courses from grade card.')
+            if not(gcElement.is_displayed()):
+                self.fail('Grade card not visible')
 
-                # Check Course Colors
-                try:
-                    courseElements = self.driver.find_elements_by_css_selector("div#GradeCard div.pull-left")
-                    for element in courseElements:
-                        try:
-                            courseTitle = element.find_element_by_css_selector("span").text
-                        except selenium.common.exceptions.NoSuchElementException:
-                            self.fail('Class not found on grade page.')
-
-                        try:
-                            courseColor = element.find_element_by_css_selector("div").value_of_css_property('background-color')
-                        except selenium.common.exceptions.NoSuchElementException:
-                            self.fail('Class color element not found on grade page.')
-
-                        try:
-                            courseCard = self.driver.find_element_by_css_selector("div#CourseCard div[data-identifier=\"" + courseTitle + "\"] div:first-of-type").value_of_css_property("border-top").split(' ',2)[2]
-                        except selenium.common.exceptions.NoSuchElementException:
-                            self.fail('Class card color element not found.')
-
-                        assert courseColor[4:].startswith(courseCard[3:-1]), 'Wrong color found on grade card for course ' + courseTitle + '.'
-                except selenium.common.exceptions.NoSuchElementException:
-                    self.fail('Could not find course elements on grade card')
-
-                # Check Course Grades
-                try:
-                    courseElements = self.driver.find_elements_by_css_selector("div#GradeCard div.card-badge-container li.clearfix")
-                    for element in courseElements:
-                        try:
-                            courseTitle = element.find_element_by_css_selector("div.pull-left span").text
-                        except selenium.common.exceptions.NoSuchElementException:
-                            self.fail('Could not find course title element on grade card.')
+            if type(self.user.grade_card) == bool:
+                pass
+            elif type(self.user.grade_card) == dict:
+                if 'courses' in self.user.grade_card:
+                    # Check Course Titles
+                    try:
+                        courseElements = self.driver.find_elements_by_css_selector("div#GradeCard div.pull-left span.card-badge-inline-label")
+                        courseTitles = []
+                        for element in courseElements:
+                            courseTitles.append(element.text)
                         
-                        try:
-                            courseGrade = element.find_element_by_css_selector("div.pull-right span").text
-                        except selenium.common.exceptions.NoSuchElementException:
-                            self.fail('Could not find course grade on element page.')
+                        expectedCourses = self.user.grade_card['courses'].keys()
+                        self.assertEqual(courseTitles.sort(), expectedCourses.sort())
+                    except selenium.common.exceptions.NoSuchElementException:
+                        self.fail('Could not get courses from grade card.')
 
-                        assert self.user.grade_card['courses'][courseTitle] == courseGrade, courseGrade + ' found where ' + self.user.grade_card['courses'][courseTitle] + ' was expected for course ' + courseTitle + '.'
-                except selenium.common.exceptions.NoSuchElementException:
-                    self.fail('Could not find course elements on grade card')
+                    # Check Course Colors
+                    try:
+                        courseElements = self.driver.find_elements_by_css_selector("div#GradeCard div.pull-left")
+                        for element in courseElements:
+                            try:
+                                courseTitle = element.find_element_by_css_selector("span").text
+                            except selenium.common.exceptions.NoSuchElementException:
+                                self.fail('Class not found on grade page.')
 
-            # Check Submission Deadline
-            # To Do: check for particular date, could automate to only check in appropriate times if there was someway of getting the server time
-            if 'deadline' in self.user.grade_card:
-                try:
-                    foundDeadline = False
-                    spanElements = self.driver.find_elements_by_css_selector("div#GradeCard span")
-                    for elements in spanElements:
-                        if element.text.startswith("Note"):
-                            foundDeadline = True
+                            try:
+                                courseColor = element.find_element_by_css_selector("div").value_of_css_property('background-color')
+                            except selenium.common.exceptions.NoSuchElementException:
+                                self.fail('Class color element not found on grade page.')
 
-                    assert foundDeadline == self.user.grade_card['deadline'], ('Grade submission deadline found when not expected or not found when expected.')
+                            try:
+                                courseCard = self.driver.find_element_by_css_selector("div#CourseCard div[data-identifier=\"" + courseTitle + "\"] div:first-of-type").value_of_css_property("border-top").split(' ',2)[2]
+                            except selenium.common.exceptions.NoSuchElementException:
+                                self.fail('Class card color element not found.')
 
-                except selenium.common.exceptions.NoSuchElementException:
-                    self.fail('Could not find grade submission deadline')
+                            assert courseColor[4:].startswith(courseCard[3:-1]), 'Wrong color found on grade card for course ' + courseTitle + '.'
+                    except selenium.common.exceptions.NoSuchElementException:
+                        self.fail('Could not find course elements on grade card')
+
+                    # Check Course Grades
+                    try:
+                        courseElements = self.driver.find_elements_by_css_selector("div#GradeCard div.card-badge-container li.clearfix")
+                        for element in courseElements:
+                            try:
+                                courseTitle = element.find_element_by_css_selector("div.pull-left span").text
+                            except selenium.common.exceptions.NoSuchElementException:
+                                self.fail('Could not find course title element on grade card.')
+                            
+                            try:
+                                courseGrade = element.find_element_by_css_selector("div.pull-right span").text
+                            except selenium.common.exceptions.NoSuchElementException:
+                                self.fail('Could not find course grade on element page.')
+
+                            assert self.user.grade_card['courses'][courseTitle] == courseGrade, courseGrade + ' found where ' + self.user.grade_card['courses'][courseTitle] + ' was expected for course ' + courseTitle + '.'
+                    except selenium.common.exceptions.NoSuchElementException:
+                        self.fail('Could not find course elements on grade card')
+
+                # Check Submission Deadline
+                # To Do: check for particular date, could automate to only check in appropriate times if there was someway of getting the server time
+                if 'deadline' in self.user.grade_card:
+                    try:
+                        foundDeadline = False
+                        spanElements = self.driver.find_elements_by_css_selector("div#GradeCard span")
+                        for elements in spanElements:
+                            if element.text.startswith("Note"):
+                                foundDeadline = True
+
+                        assert foundDeadline == self.user.grade_card['deadline'], ('Grade submission deadline found when not expected or not found when expected.')
+
+                    except selenium.common.exceptions.NoSuchElementException:
+                        self.fail('Could not find grade submission deadline')
 
                 
 
-            try:
-                self.driver.find_element_by_id("toggle_grade_card_resources").click()
-            except:
-                self.fail('Could not find grade card toggle')
-
-            if self.user.grade_card['links']:
                 try:
-                    cardLinks = self.driver.find_elements_by_css_selector("grade_card_resources a")
-                    links = []
-                    for element in cardLinks:
-                        links.append[link(element.text, element.get_attribute('href'))]
-                    
-                    for link in links:
-                        assert link in self.user.grade_card['links'], (link + " not found on grade card")
+                    self.driver.find_element_by_id("toggle_grade_card_resources").click()
+                except:
+                    self.fail('Could not find grade card toggle')
+
+                if self.user.grade_card['links']:
+                    try:
+                        cardLinks = self.driver.find_elements_by_css_selector("grade_card_resources a")
+                        links = []
+                        for element in cardLinks:
+                            links.append[link(element.text, element.get_attribute('href'))]
                         
-                except selenium.common.exceptions.NoSuchElementException:
-                    self.fail('Could not find resource links on card')               
+                        for link in links:
+                            assert link in self.user.grade_card['links'], (link + " not found on grade card")
+                            
+                    except selenium.common.exceptions.NoSuchElementException:
+                        self.fail('Could not find resource links on card')               
 
 
 # These are the classes that a test scenario should actually subclass

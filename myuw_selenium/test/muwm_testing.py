@@ -76,32 +76,8 @@ else:
 #         self.setDate('yyyy-mm-dd') # Optional
 
 
-@on_platforms()
-class myuw_jbothell_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
-    def postsetup(self):
-        self.user = testUser(self.driver, self, 
-            critical = 4, 
-            unread = 10, 
-            email = emails['live'], 
-            regcard = True, 
-            regholds = 1, 
-            reglinks = (links['bts'], links['reg']), 
-            schedule = True, 
-            vSchedule = True,
-            courses = ('BCWRIT 500 A', 'BISSEB 259 A', 'BESS 102 A', 'BESS 102 AB'), 
-            tuition = {'balance' : True, 'due' : 'future'},
-            HFS = ('stu',), 
-            library = True, 
-            libraryholds = 1, 
-            textbooks = ('BISSEB 259 A', 'BCWRIT 500', 'BESS 102 A', 'BESS 102 AB'),
-            resources = resLinks['bothell'],
-            record = records['jbothell'],
-            academic_card = academic_card_values['jbothell']
-        )
-        self.username = 'jbothell'
-        self.setDate('2013-04-12')
-             
-
+         
+'''
 # jbothell user scenario
 @on_platforms()
 class myuw_jbothell(myuw_user_scenario, SeleniumLiveServerTestCase):
@@ -210,7 +186,31 @@ class myuw_none(myuw_user_scenario, SeleniumLiveServerTestCase):
         )
         self.username = 'none'
 '''
-'''
+@on_platforms()
+class myuw_jbothell_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            critical = 4, 
+            unread = 10, 
+            email = emails['live'], 
+            regcard = True, 
+            regholds = 1, 
+            reglinks = (links['bts'], links['reg']), 
+            schedule = True, 
+            vSchedule = True,
+            courses = ('BCWRIT 500 A', 'BISSEB 259 A', 'BESS 102 A', 'BESS 102 AB'), 
+            tuition = {'balance' : True, 'due' : 'future'},
+            HFS = ('stu',), 
+            library = True, 
+            libraryholds = 1, 
+            textbooks = ('BISSEB 259 A', 'BCWRIT 500', 'BESS 102 A', 'BESS 102 AB'),
+            resources = resLinks['bothell'],
+            record = records['jbothell'],
+            academic_card = academic_card_values['jbothell']
+        )
+        self.username = 'jbothell'
+        self.setDate('2013-04-12')
+    
 @on_platforms()
 class myuw_none_date1(myuw_date_scenario, SeleniumLiveServerTestCase):
     def postsetup(self):
@@ -399,8 +399,7 @@ class myuw_javerage_date3(myuw_date_scenario, SeleniumLiveServerTestCase):
         self.user = testUser(self.driver, self, 
             regcard = False,
             noregfound = False,
-            futureQtrs = []
-            
+            futureQtrs = [],
         )
         self.username = 'javerage'
         self.setDate('2013-04-01')
@@ -440,6 +439,18 @@ class myuw_javerage_date6(myuw_date_scenario, SeleniumLiveServerTestCase):
         )
         self.username = 'javerage'
         self.setDate('2013-09-25')
+
+@on_platforms()
+class myuw_javerage_date7(myuw_date_scenario, SeleniumLiveServerTestCase):
+    def postsetup(self):
+        self.user = testUser(self.driver, self, 
+            regcard = False,
+            noregfound = False,
+            futureQtrs = [],
+            grade_card = True
+        )
+        self.username = 'javerage'
+        self.setDate('2013-03-28')
 
 
 # Commenting this out for now, there seems to be a mismatch 
