@@ -1,16 +1,17 @@
 from myuw_selenium.test.textbook_card_lp_c import *
+from myuw_selenium.test.card_tests_c import create_test_from_test
 
 test_data = [ 
     # Card Hidden
-    { 'date':'2013-03-26', 'user':'javerage', 'test_name':'before_grade_submission_deadline', 'test':NoCardTest },
-    { 'date':'2013-04-08', 'user':'eight',    'test_name':'after_first_week_of_quarter',      'test':NoCardTest },
-    { 'date':'2013-03-22', 'user':'jbothell', 'test_name':'before_end_of_finals_week',        'test':NoCardTest },
-    { 'date':'2013-07-26', 'user':'javerage', 'test_name':'summer_b_term_no_card',            'test':NoCardTest },
+    { 'date':'2013-03-26', 'user':'javerage', 'test_name':'before_grade_submission_deadline', 'test':NoCardShownTest },
+    { 'date':'2013-04-08', 'user':'eight',    'test_name':'after_first_week_of_quarter',      'test':NoCardShownTest },
+    { 'date':'2013-03-22', 'user':'jbothell', 'test_name':'before_end_of_finals_week',        'test':NoCardShownTest },
+    { 'date':'2013-07-26', 'user':'javerage', 'test_name':'summer_b_term_no_card',            'test':NoCardShownTest },
 
     # Card Shown
-    { 'date':'2013-03-27', 'user':'javerage', 'test_name':'after_grade_submission_deadline', 'test':CardTest },
-    { 'date':'2013-04-01', 'user':'eight',    'test_name':'first_week_of_quarter',           'test':CardTest },
-    { 'date':'2013-04-07', 'user':'jbothell', 'test_name':'first_week_of_quarter',           'test':CardTest },
+    { 'date':'2013-03-27', 'user':'javerage', 'test_name':'after_grade_submission_deadline', 'test':CardShownTest },
+    { 'date':'2013-04-01', 'user':'eight',    'test_name':'first_week_of_quarter',           'test':CardShownTest },
+    { 'date':'2013-04-07', 'user':'jbothell', 'test_name':'first_week_of_quarter',           'test':CardShownTest },
 
     # Correct Course
     {'user':'javerage', 'date':'2013-04-05', 'test_name':'javerage_course', 'courses':['PHYS 121 A', 'PHYS 121 AC', 'PHYS 121 AQ', 'TRAIN 100 A', 'TRAIN 101 A'],                                              'test':CoursesTest },
