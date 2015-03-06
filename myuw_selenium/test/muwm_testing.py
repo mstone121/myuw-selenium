@@ -46,21 +46,7 @@ from myuw_selenium.test.grade_card import grade_card_values
 # Test scenario classes
 from muwm_cases import myuw_user_scenario, myuw_date_scenario
 
-# Set up a virtual display if we're on a supported system
-# and the DISPLAY variable does not appear to be set. 
-# Is there a better way to check if the ssytem is using X or not?
-p = sys.platform
 
-if p in ('win32', 'mac', 'darwin'):
-    pass
-else:
-    if os.environ.get('DISPLAY'):
-        pass
-    else:
-        import pyvirtualdisplay
-        vd = pyvirtualdisplay.Display(visible = 0, size = (800, 600))
-        vd.start()
-            
 
 
 # Mock data user scenarios
