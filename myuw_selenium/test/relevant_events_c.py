@@ -58,9 +58,7 @@ class NoCardShownTest(RelevantEventsTest):
 class EventsTest(RelevantEventsTest):
     def _test(self):
         events = self.getEvents()
-
-        print(events)
-        # assertEqual(self.events, events)
+        assertEqual(self.events, events)
             
 class DisclosureTest(RelevantEventsTest):
     def _test(self):
@@ -69,26 +67,24 @@ class DisclosureTest(RelevantEventsTest):
 class LinksTest(RelevantEventsTest):
     def _test(self):
         card_object = self.getCardObject()
-        links = card_object.find_elements_by_css_selector("div.myuw-events-calendar-link ul.myuw-events-list a")
+        
+        # Get all link elements from bottom of card
+        links = card_object.find_elements_by_css_selector("div.myuw-events-calendar-link:last-of-type a")
+        links.append(card_object.find_elements_by_css_selector("div.myuw-events-calendar-link-sml a"))
         
         link_data = {}
         for link in links:
             link_data[link.text] = link.get_attribute('href')
+            
+        self.assertEqual(self.links, link_data)
 
-        print(link_data)
-
-        # self.assertEqual(self.links, link_data)
-
-class FutureEventsTest(RelevantEventsTest):
+class MessageTest(RelevantEventsTest):
     def _test(self):
         card_object = self.getCardObject()
-        line = card_object.find_element_by_css_selector("div.myuw-events-calendar-link").text.split('.')[0].strip()
+
+        try:
+            message = card_object.find_element_by_css_selector("div.myuw-events-calendar-link-sml").text
+        except NoSuchElementException:
+            message = card_object.find_element_by_css_selector("div.myuw-events-calendar-link:last-of-type").text
     
-        events = int(line.split(' ')[0])
-        cals   = " ".join(line.split(' ')[3:])
-
-        print(events + "\n")
-        print(cals)
-
-        # self.assertEqual(self.events, events)
-        # self.assertEqual(self.cals, cals)
+        self.assertEqual(self.message, message)

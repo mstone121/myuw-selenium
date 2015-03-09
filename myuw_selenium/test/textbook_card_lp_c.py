@@ -1,6 +1,9 @@
 from myuw_selenium.platforms import on_platforms, SeleniumLiveServerTestCase
+from myuw_selenium.test.card_tests_c import create_tests_from_test
+
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
+
 import time
 
 # General Test Class
