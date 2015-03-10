@@ -38,6 +38,11 @@ class RelevantEventsTest(CardTest):
         except NoSuchElementException:
             return None
 
+    def removeWhitespace(self, str):
+        import re
+        pat = re.compile(r'\s+')
+        return pat.sub('', str)
+
 class CardShownTest(RelevantEventsTest):
     def _test(self):
         # Check for element
@@ -64,19 +69,27 @@ class DisclosureTest(RelevantEventsTest):
     def _test(self):
         self.assertTrue(self.openDisclosure(self.getCardObject()))
 
-class LinksTest(RelevantEventsTest):
+class NoDisclosureTest(RelevantEventsTest):
     def _test(self):
         card_object = self.getCardObject()
         
+        with self.assertRaises(NoSuchElementException):
+            card_object.find_element_by_css_selector("div.card-disclosure a")
+
+class LinksTest(RelevantEventsTest):
+    def _test(self):
+        card_object = self.getCardObject()
+        self.openDisclosure(card_object)
+        
         # Get all link elements from bottom of card
         links = card_object.find_elements_by_css_selector("div.myuw-events-calendar-link:last-of-type a")
-        links.append(card_object.find_elements_by_css_selector("div.myuw-events-calendar-link-sml a"))
+        links.extend(card_object.find_elements_by_css_selector("div.myuw-events-calendar-link-sml a"))
         
         link_data = {}
         for link in links:
-            link_data[link.text] = link.get_attribute('href')
+            link_data[str(link.text)] = str(link.get_attribute('href'))
             
-        self.assertEqual(self.links, link_data)
+        self.assertEqual(sorted(self.links), sorted(link_data))
 
 class MessageTest(RelevantEventsTest):
     def _test(self):
@@ -87,4 +100,4 @@ class MessageTest(RelevantEventsTest):
         except NoSuchElementException:
             message = card_object.find_element_by_css_selector("div.myuw-events-calendar-link:last-of-type").text
     
-        self.assertEqual(self.message, message)
+        self.assertEqual(self.removeWhitespace(self.message), self.removeWhitespace(str(message)))
