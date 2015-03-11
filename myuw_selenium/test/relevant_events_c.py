@@ -80,7 +80,7 @@ class LinksTest(RelevantEventsTest):
     def _test(self):
         card_object = self.getCardObject()
         self.openDisclosure(card_object)
-        
+    
         # Get all link elements from bottom of card
         links = card_object.find_elements_by_css_selector("div.myuw-events-calendar-link:last-of-type a")
         links.extend(card_object.find_elements_by_css_selector("div.myuw-events-calendar-link-sml a"))
@@ -94,6 +94,7 @@ class LinksTest(RelevantEventsTest):
 class MessageTest(RelevantEventsTest):
     def _test(self):
         card_object = self.getCardObject()
+        self.openDisclosure(card_object)
 
         try:
             message = card_object.find_element_by_css_selector("div.myuw-events-calendar-link-sml").text
