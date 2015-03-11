@@ -135,11 +135,17 @@ class SeleniumLiveServerTestCase(LiveServerTestCase):
         self.driver.implicitly_wait(5)
 
     def setUpLocal(self):
+        # Make headless
+        import pyvirtualdisplay as pyvd
+        self.display = pyvd.Display()
+        self.display.start()
+        
         self.driver = getattr(webdriver, self.browser)()
         self.driver.implicitly_wait(3)
 
     def tearDownLocal(self):
         self.driver.quit()
+        self.display.stop()
 
     def tearDownSauce(self):
         print("\nLink to your job: \n "
