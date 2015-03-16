@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
 from myuw_selenium.test.card_tests_c import CardTest
+=======
+from myuw_selenium.platforms import on_platforms, SeleniumLiveServerTestCase
+from myuw_selenium.test.card_tests_c import create_tests_from_test
+
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.remote.webelement import WebElement
+
+>>>>>>> feature/relevant_events
 import time
 
 # General Test Class
