@@ -152,7 +152,6 @@ class SeleniumLiveServerTestCase(LiveServerTestCase):
 
     def tearDownLocal(self):
         self.driver.quit()
-        self.display.stop()
 
     def tearDownSauce(self):
         print("\nLink to your job: \n "
