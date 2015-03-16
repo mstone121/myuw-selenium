@@ -1,7 +1,7 @@
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
 from myuw_selenium.test.card_tests_c import CardTest
-import time
+
 
 # General Test Class
 class TextbookCardTest(CardTest):
