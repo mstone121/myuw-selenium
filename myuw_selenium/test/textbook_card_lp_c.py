@@ -18,7 +18,7 @@ class NoCardShownTest(TextbookCardTest):
         # Check element is not displayed
         try:
             textbook_card_object = self.driver.find_element_by_id("TextbookCard")
-            self.assertFalse(textbook_card_object.is_displayed(), 'Card is displayed')
+            self.assertFalse(textbook_card_object.is_displayed(), 'Textbook card is displayed.')
         except NoSuchElementException:
             pass
 
