@@ -37,6 +37,24 @@ class LinkTest(LibSubjectGuidesTest):
             except NoSuchElementException:
                 pass
             
-                
+                 
         for link in self.links.keys():
             self.assertEqual(links[link], self.links[link])
+
+
+class NavigateTest(LibSubjectGuidesTest):
+    def _test(self):
+        card_objects = self.getCardObjects()
+
+        for course in self.links.keys():
+            # Open disclosure
+            card_objects[course].find_element_by_css_selector("div.card-disclosure a").click()
+
+            # Go to page
+            card_objects[course].find_element_by_css_selector("a.lib_subject_guide").click()
+            self.assertEqual(str(self.driver.current_url), self.links[course])
+
+            # Return to landing page
+            self.driver.back()
+            self.assertEqual(str(self.driver.current_url), self.live_server_url + '/mobile/landing/')
+            

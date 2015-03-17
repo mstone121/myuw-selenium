@@ -28,6 +28,11 @@ test_data = [
     { 'user':'jnew',     'test_name':'jnew_links',     'test':LinkTest, 'links': links['jnew']     },
     { 'user':'eight',    'test_name':'eight_links',    'test':LinkTest, 'links': links['eight']    },
 
+    # Navigate Tests
+    { 'user':'javerage', 'test_name':'javerage_navigate', 'test':NavigateTest, 'links': links['javerage'] },
+    { 'user':'jnew',     'test_name':'jnew_navigate',     'test':NavigateTest, 'links': links['jnew']     },
+    { 'user':'eight',    'test_name':'eight_navigate',    'test':NavigateTest, 'links': links['eight']    },
+
 ]
 
 
