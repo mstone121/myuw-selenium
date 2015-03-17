@@ -1,4 +1,6 @@
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.common.exceptions import NoSuchElementException
+
 from myuw_selenium.test.card_tests_c import CardTest
 
 # General Test Class
@@ -31,9 +33,10 @@ class LinkTest(LibSubjectGuidesTest):
             
             # Get link
             try:
-                links[course] = element.find_element_by_css_selector("a.lib_subject_guide").get_attribute('href')
+                links[course] = str(card_objects[course].find_element_by_css_selector("a.lib_subject_guide").get_attribute('href'))
             except NoSuchElementException:
                 pass
             
-
-        self.assertEqual(links.sort(), self.links.sort())
+                
+        for link in self.links.keys():
+            self.assertEqual(links[link], self.links[link])
