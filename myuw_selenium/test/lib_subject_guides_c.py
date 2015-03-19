@@ -3,6 +3,8 @@ from selenium.common.exceptions import NoSuchElementException
 
 from myuw_selenium.test.card_tests_c import CardTest
 
+import time
+
 # General Test Class
 class LibSubjectGuidesTest(CardTest):
 
@@ -29,7 +31,7 @@ class LinkTest(LibSubjectGuidesTest):
         links = {}
         for course in card_objects.keys():
             # Open disclosure
-            card_objects[course].find_element_by_css_selector("div.card-disclosure").click()
+            card_objects[course].find_element_by_css_selector("div.card-disclosure a").click()
             
             # Get link
             try:
@@ -56,5 +58,9 @@ class NavigateTest(LibSubjectGuidesTest):
 
             # Return to landing page
             self.driver.back()
+            time.sleep(2)
             self.assertEqual(str(self.driver.current_url), self.live_server_url + '/mobile/landing/')
+
+            # Reload card objects
+            card_objects = self.getCardObjects()
             
