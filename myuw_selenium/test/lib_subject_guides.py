@@ -11,8 +11,20 @@ links = {
         'TRAIN 101 A': 'http://www.lib.washington.edu/subject/',
     },
 
+    'javerage_n' : {
+        'PHYS 121 A' : 'http://guides.lib.washington.edu/physics_astronomy',
+        'PHYS 121 AC': 'http://guides.lib.washington.edu/physics_astronomy',
+        'PHYS 121 AQ': 'http://guides.lib.washington.edu/physics_astronomy',
+        'TRAIN 100 A': 'http://guides.lib.washington.edu/subject',
+        'TRAIN 101 A': 'http://guides.lib.washington.edu/subject',
+    },
+
     'jnew' : {
         'TRAIN 101 A' : 'http://www.lib.washington.edu/subject/',
+    },
+
+    'jnew_n' : {
+        'TRAIN 101 A' : 'http://guides.lib.washington.edu/subject',
     },
 
     'eight' : {
@@ -27,6 +39,11 @@ test_data = [
     { 'user':'javerage', 'test_name':'javerage_links', 'test':LinkTest, 'links': links['javerage'] },
     { 'user':'jnew',     'test_name':'jnew_links',     'test':LinkTest, 'links': links['jnew']     },
     { 'user':'eight',    'test_name':'eight_links',    'test':LinkTest, 'links': links['eight']    },
+
+    # Navigate Tests
+    { 'user':'javerage', 'test_name':'javerage_navigate', 'test':NavigateTest, 'links': links['javerage_n'] },
+    { 'user':'jnew',     'test_name':'jnew_navigate',     'test':NavigateTest, 'links': links['jnew_n']     },
+    { 'user':'eight',    'test_name':'eight_navigate',    'test':NavigateTest, 'links': links['eight']    },
 
 ]
 
