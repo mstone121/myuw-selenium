@@ -16,5 +16,5 @@ unittest2
 -e git+https://github.com/mstone121/django-supporttools.git#egg=SupportTools
 -e git://github.com/vegitron/permissions_logging#egg=PermissionsLogging
 -e git://github.com/devights/django_client_logger#egg=django_client_logger
--e git://github.com/mstone121/myuw.git@improve_coverage#egg=MyUW
+-e git://github.com/mstone121/myuw.git#egg=MyUW
 selenium
