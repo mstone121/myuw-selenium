@@ -1,7 +1,7 @@
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote.webelement import WebElement
 from myuw_selenium.test.card_tests_c import CardTest
-import time
+
 
 # General Test Class
 class RelevantEventsTest(CardTest):
@@ -89,7 +89,7 @@ class LinksTest(RelevantEventsTest):
         for link in links:
             link_data[str(link.text)] = str(link.get_attribute('href'))
             
-        self.assertEqual(sorted(self.links), sorted(link_data.sort()))
+        self.assertEqual(sorted(self.links), sorted(link_data))
 
 class MessageTest(RelevantEventsTest):
     def _test(self):
@@ -143,7 +143,7 @@ class EventsTest(RelevantEventsTest):
             time = time[1].split(' ')
             minute = int(time[0])
             
-            if time[1] is "PM":
+            if time[1] == "PM":
                 hour += 12
             
             date_list.append(datetime.datetime(year, month, day, hour, minute))
