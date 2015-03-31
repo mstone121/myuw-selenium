@@ -23,21 +23,21 @@ class CourseEvalTest(CardTest):
         return card_objects_dict
 
 
-    
+
 class EvalsShownTest(CourseEvalTest):
     def _test(self):
         card_objects = self.getCardObjects()
         
-        for card in card_objects:
-            self.assertIsInstance(card.find_element_by_css_selector("div.myuw-course-eval"), WebElement)
+        for course in card_objects.keys():
+            self.assertIsInstance(card_objects[course].find_element_by_css_selector("div.myuw-course-eval"), WebElement)
 
 class EvalsNotShownTest(CourseEvalTest):
     def _test(self):
         card_objects = self.getCardObjects()
 
-        for card in card_objects:
+        for course in card_objects.keys():
             with self.assertRaises(NoSuchElementException):
-                card.find_element_by_css_selector("div.myuw-course-eval")
+                card_objects[course].find_element_by_css_selector("div.myuw-course-eval")
 
 
 class LinksTest(CourseEvalTest):
@@ -45,13 +45,37 @@ class LinksTest(CourseEvalTest):
         card_objects = self.getCardObjects()
 
         courses = {}
-        for course in card_objects.keys:
+        for course in card_objects.keys():
             links = {}
-            link_elements = card_objects[course].find_element_by_css_selector("div.myuw-course-eval a")
+            link_elements = card_objects[course].find_elements_by_css_selector("div.myuw-course-eval a")
             for link in link_elements:
                 links[link.text] = link.get_attribute("href")
 
             courses[course] = links
-
-                
             
+        print(links)
+        #self.assertEqual(sorted(self.links), sorted(links))
+
+class CloseDateTest(CourseEvalTest):
+    def _test(self):
+        card_objects = self.getCardObjects()
+
+        element = card_objects[self.course]
+
+        text = element.find_element_by_css_selector("div.card-related-messages strong").text
+
+        import re
+        pattern = re.compile('^All evaluations close on ([A-za-z]{3}) ([0-9]{1,2}).*$')
+        match   = re.match(pattern, text)
+
+        month = match.group(1)
+        day   = match.group(2)
+
+        print("Month: {0}\nDay: {1}\n".format(month, day))
+
+        months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        
+        import datetime
+        date = datetime.date(2013, months.index(month) + 1, day)
+
+        #self.assertEqual(self.date, date)
