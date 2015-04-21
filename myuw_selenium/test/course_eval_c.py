@@ -4,6 +4,8 @@ from selenium.common.exceptions import NoSuchElementException
 from myuw_selenium.test.card_tests_c import CardTest
 
 import time
+import re
+import datetime        
 
 # General Test Class
 class CourseEvalTest(CardTest):
@@ -11,6 +13,8 @@ class CourseEvalTest(CardTest):
     def setUp(self):
         CardTest.setUp(self)
 
+        if not hasattr(self, 'all_courses'):
+            self.all_courses = False
 
     def getCardObjects(self):
         card_objects = self.driver.find_elements_by_css_selector("div#CourseCard div.card")
@@ -18,7 +22,10 @@ class CourseEvalTest(CardTest):
         card_objects_dict = {}
         for element in card_objects:
             class_title = element.get_attribute('data-identifier')
-            card_objects_dict[class_title] = element
+            
+            # Only get cards named in test
+            if self.all_courses or (class_title in self.courses):
+                card_objects_dict[class_title] = element
 
         return card_objects_dict
 
@@ -29,7 +36,7 @@ class EvalsShownTest(CourseEvalTest):
         card_objects = self.getCardObjects()
         
         for course in card_objects.keys():
-            self.assertIsInstance(card_objects[course].find_element_by_css_selector("div.myuw-course-eval"), WebElement)
+                self.assertIsInstance(card_objects[course].find_element_by_css_selector("div.myuw-course-eval"), WebElement)
 
 class EvalsNotShownTest(CourseEvalTest):
     def _test(self):
@@ -53,29 +60,26 @@ class LinksTest(CourseEvalTest):
 
             courses[course] = links
             
-        print(links)
-        #self.assertEqual(sorted(self.links), sorted(links))
+        print(courses)
+        #self.assertEqual(sorted(self.course_links), sorted(courses))
 
 class CloseDateTest(CourseEvalTest):
     def _test(self):
         card_objects = self.getCardObjects()
 
-        element = card_objects[self.course]
+        for course in card_objects.keys():
+            element = card_objects[course]
+            text = element.find_element_by_css_selector("span.myuw-eval-close-date").text
 
-        text = element.find_element_by_css_selector("div.card-related-messages strong").text
+            pattern = re.compile('^All evaluations close on ([A-za-z]{3}) ([0-9]{1,2}).*$')
+            match   = re.match(pattern, text)
 
-        import re
-        pattern = re.compile('^All evaluations close on ([A-za-z]{3}) ([0-9]{1,2}).*$')
-        match   = re.match(pattern, text)
+            month = match.group(1)
+            day   = match.group(2)
 
-        month = match.group(1)
-        day   = match.group(2)
+            print("Month: {0}\nDay: {1}\n".format(month, day))
+            
+            months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            date = datetime.date(2013, months.index(month) + 1, int(day))
 
-        print("Month: {0}\nDay: {1}\n".format(month, day))
-
-        months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        
-        import datetime
-        date = datetime.date(2013, months.index(month) + 1, day)
-
-        #self.assertEqual(self.date, date)
+            #self.assertEqual(self.dates[course], date)
