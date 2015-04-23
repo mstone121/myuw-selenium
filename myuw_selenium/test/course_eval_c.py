@@ -51,17 +51,13 @@ class LinksTest(CourseEvalTest):
     def _test(self):
         card_objects = self.getCardObjects()
 
-        courses = {}
         for course in card_objects.keys():
             links = {}
             link_elements = card_objects[course].find_elements_by_css_selector("div.myuw-course-eval a")
             for link in link_elements:
                 links[link.text] = link.get_attribute("href")
 
-            courses[course] = links
-            
-        print(courses)
-        #self.assertEqual(sorted(self.course_links), sorted(courses))
+            self.assertEqual(sorted(self.links[course]), sorted(links))
 
 class CloseDateTest(CourseEvalTest):
     def _test(self):
@@ -77,9 +73,24 @@ class CloseDateTest(CourseEvalTest):
             month = match.group(1)
             day   = match.group(2)
 
-            print("Month: {0}\nDay: {1}\n".format(month, day))
-            
             months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             date = datetime.date(2013, months.index(month) + 1, int(day))
 
-            #self.assertEqual(self.dates[course], date)
+            self.assertEqual(self.dates[course], date)
+
+class InstructorNameTest(CourseEvalTest):
+    def _test(self):
+        card_objects = self.getCardObjects()
+
+        for course in card_objects.keys():
+            name_elements = card_objects[course].find_elements_by_css_selector("ul.myuw-eval-list li.myuw-eval-list-item a")
+            
+            for element in name_elements:
+                self.assertIn(' '.join(element.text.split(' ')[1:]), self.names[course])
+            
+
+            
+
+                                                                                                        
+
+            

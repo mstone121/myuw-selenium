@@ -24,8 +24,7 @@ if RUN_LOCAL:
     if p in ('win32', 'mac', 'darwin'):
         pass
     else:
-        #if os.environ.get('DISPLAY'):
-        if not os.environ.get('DISPLAY'):
+        if os.environ.get('DISPLAY'):
             pass
         else:
             import pyvirtualdisplay
