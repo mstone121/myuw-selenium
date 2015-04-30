@@ -1,5 +1,8 @@
 from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
+
 
 from myuw_selenium.test.card_tests_c import CardTest
 
@@ -89,8 +92,32 @@ class InstructorNameTest(CourseEvalTest):
                 self.assertIn(' '.join(element.text.split(' ')[1:]), self.names[course])
             
 
-            
+class TabAccessTest(CourseEvalTest):
+    def _test(self):
+        self.send_tab = ActionChains(self.driver).send_keys(Keys.TAB)
+        
+        card_objects = self.getCardObjects()
 
-                                                                                                        
+        for course in card_objects.keys():
+            card = card_objects[course]
+            hidden_elements = card.find_elements_by_css_selector("div.slide-hide *")
 
-            
+            # Generate hash list (faster comparisons)
+            hashes = []
+            for element in hidden_elements:
+                hashes.append(hash(element))
+                
+            start_element = self.driver.switch_to.active_element
+
+            # Check first element not supposed to be hidden
+            self.assertTrue(start_element not in hidden_elements)
+            self.send_tab.perform()
+
+            while self.driver.switch_to.active_element != start_element:
+                element = self.driver.switch_to.active_element
+                if (hash(element) in hashes):
+                    self.assertFalse(element in hidden_elements,
+                                     msg=("Element supposed to be hidden\nTag: %s\nText: %s\nClass: %s\nID: %s" %
+                                          (element.tag_name, element.text, element.get_attribute('class'), element.get_attribute('id'))))
+                    
+                self.send_tab.perform()

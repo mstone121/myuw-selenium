@@ -8,21 +8,29 @@ tests = [
     # Javerage
     { 'user':'javerage',
       'date':'2013-06-10', 
-      'test_name':'Javerage: Eval Shown', 
+      'test_name':'Javerage: Eval shown between a week before finals week and the end of finals week', 
       'test':EvalsShownTest,    
       'courses':['TRAIN 100 A', 'TRAIN 101 A']
   },
 
     { 'user':'javerage', 
-      'date':'2013-05-01',
-      'test_name':'Javerage: No Eval',
+      'date':'2013-06-02',
+      'test_name':'Javerage: No eval shown a before a week before finals week',
       'test':EvalsNotShownTest,
       'courses':['TRAIN 100 A', 'TRAIN 101 A']
   },
 
+    { 'user':'javerage', 
+      'date':'2013-06-15',
+      'test_name':'Javerage: No eval shown after finals week',
+      'test':EvalsNotShownTest,
+      'courses':['TRAIN 100 A', 'TRAIN 101 A']
+  },
+    
+
     { 'user':'javerage',
       'date':'2013-06-10',
-      'test_name':'Javerage: Links Test',
+      'test_name':'Javerage: Links are correct (display text and url)',
       'test':LinksTest,
       'courses':['TRAIN 100 A', 'TRAIN 101 A'],
       'links':{
@@ -38,7 +46,7 @@ tests = [
 
     { 'user':'javerage',
       'date':'2013-06-10',
-      'test_name':'Javerage: Close Date', 
+      'test_name':'Javerage: Close date is correct', 
       'test':CloseDateTest,    
       'courses':['TRAIN 100 A', 'TRAIN 101 A'],
       'dates': {
@@ -49,7 +57,7 @@ tests = [
 
     { 'user':'javerage',
       'date':'2013-06-10',
-      'test_name':'Javerage: Instructor Name',
+      'test_name':'Javerage: Instructor name is correct',
       'test':InstructorNameTest,
       'courses':['TRAIN 100 A', 'TRAIN 101 A'],
       'names': {
@@ -58,24 +66,39 @@ tests = [
       }
   },
 
+    { 'user':'javerage',
+      'date':'2013-06-10',
+      'test_name':'Javerage: Tab access test',
+      'test':TabAccessTest,
+      'courses':['TRAIN 101 A', 'TRAIN 100 A']
+    },
+
+
     # Jbothell
     { 'user':'jbothell',
       'date':'2013-06-10', 
-      'test_name':'Jbothell: Eval Shown', 
+      'test_name':'Jbothell: Eval shown between a week before finals week and the end of finals week', 
       'test':EvalsShownTest,    
       'courses':['BCWRIT 500 A']
   },
 
     { 'user':'jbothell', 
-      'date':'2013-05-01',
-      'test_name':'Jbothell: No Eval',
+      'date':'2013-06-02',
+      'test_name':'Jbothell: No eval shown a before a week before finals week',
       'test':EvalsNotShownTest,
       'courses':['BCWRIT 500 A']
   },
 
     { 'user':'jbothell',
+      'date':'2013-06-15',
+      'test_name':'Jbothell: No eval shown after finals week',
+      'test':EvalsNotShownTest,
+      'courses':['BCWRIT 500 A']
+    },
+
+    { 'user':'jbothell',
       'date':'2013-06-10',
-      'test_name':'Jbothell: Links Test',
+      'test_name':'Jbothell: Links are correct (text and url)',
       'test':LinksTest,
       'courses':['BCWRIT 500 A'],
       'links':{
@@ -87,7 +110,7 @@ tests = [
 
     { 'user':'jbothell',
       'date':'2013-06-10',
-      'test_name':'Jbothell: Close Date', 
+      'test_name':'Jbothell: Close date is correct', 
       'test':CloseDateTest,    
       'courses':['BCWRIT 500 A'],
       'dates': {
@@ -97,13 +120,21 @@ tests = [
 
     { 'user':'jbothell',
       'date':'2013-06-10',
-      'test_name':'Jbothell: Instructor Name',
+      'test_name':'Jbothell: Instructor name is correct',
       'test':InstructorNameTest,
       'courses':['BCWRIT 500 A'],
       'names': {
           'BCWRIT 500 A': ['Jim Bags'],
       }
   },
+
+    { 'user':'jbothell',
+      'date':'2013-06-10',
+      'test_name':'Jbothell: Tab access test',
+      'test':TabAccessTest,
+      'courses':['BCWRIT 500 A']
+    },
+
 
 ]
 
