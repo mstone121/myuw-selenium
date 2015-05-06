@@ -1,3 +1,6 @@
+# Encoding (for special characters)
+# coding=UTF-8
+
 from myuw_selenium.test.course_eval_c import *
 from myuw_selenium.test.card_tests_c import create_test_from_test
 
@@ -39,7 +42,7 @@ tests = [
           },
           'TRAIN 101 A' : {
               'Rate EIGHT CLASS STUDENT':'https://uw.iasysdev.org/survey/136617',
-              'Rate BILL AVERAGE TEACHER':'https://uw.iasysdev.org/survey/1337',
+              'Rate Nancy O\'Brien-Abël':'https://uw.iasysdev.org/survey/1337',
           }
       }
   },           
@@ -62,7 +65,7 @@ tests = [
       'courses':['TRAIN 100 A', 'TRAIN 101 A'],
       'names': {
           'TRAIN 100 A': ['JAMES AVERAGE STUDENT'],
-          'TRAIN 101 A': ['EIGHT CLASS STUDENT', 'BILL AVERAGE TEACHER']
+          'TRAIN 101 A': ['EIGHT CLASS STUDENT', 'Nancy O\'Brien-Abël']
       }
   },
 
@@ -135,11 +138,82 @@ tests = [
       'courses':['BCWRIT 500 A']
     },
 
+    # Eight
+    { 'user':'eight',
+      'date':'2013-06-10', 
+      'test_name':'Eight: Eval shown between a week before finals week and the end of finals week', 
+      'test':EvalsShownTest,    
+      'courses':['T ARTS 110 A']
+  },
 
+    { 'user':'eight', 
+      'date':'2013-06-02',
+      'test_name':'Eight: No eval shown a before a week before finals week',
+      'test':EvalsNotShownTest,
+      'courses':['T ARTS 110 A']
+  },
+
+    { 'user':'eight',
+      'date':'2013-06-15',
+      'test_name':'Eight: No eval shown after finals week',
+      'test':EvalsNotShownTest,
+      'courses':['T ARTS 110 A']
+    },
+
+    { 'user':'eight',
+      'date':'2013-06-10',
+      'test_name':'Eight: Links are correct (text and url)',
+      'test':LinksTest,
+      'courses':['T ARTS 110 A'],
+      'links':{
+          'T ARTS 110 A' : {
+              'Rate EIGHT CLASS STUDENT':'https://uwt.iasystem.org/survey/143301',
+          },
+      }
+  },           
+
+    { 'user':'eight',
+      'date':'2013-06-10',
+      'test_name':'Eight: Close date is correct', 
+      'test':CloseDateTest,    
+      'courses':['T ARTS 110 A'],
+      'dates': {
+          'T ARTS 110 A': datetime.date(2013, 3, 20),
+      }
+  },
+
+    { 'user':'eight',
+      'date':'2013-06-10',
+      'test_name':'Eight: Instructor name is correct',
+      'test':InstructorNameTest,
+      'courses':['T ARTS 110 A'],
+      'names': {
+          'T ARTS 110 A': ['JAMES INTERNATIONAL STUDENT', 'EIGHT CLASS STUDENT'],
+      }
+  },
+
+    { 'user':'eight',
+      'date':'2013-06-10',
+      'test_name':'Eight: Tab access test',
+      'test':TabAccessTest,
+      'courses':['T ARTS 110 A']
+    },
+    
 ]
 
+to_run = [
+    EvalsShownTest,
+    EvalsNotShownTest,
+    LinksTest,
+    CloseDateTest,
+    InstructorNameTest,
+    TabAccessTest,
+]
+    
+
 for test in tests:
-    vars()['test_' + test['test_name']] = create_test_from_test(test)[0]
+    if (test['test'] in to_run):
+        vars()['test_' + test['test_name']] = create_test_from_test(test)[0]
 
 del vars()['test']
 del vars()['tests']

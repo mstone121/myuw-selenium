@@ -32,6 +32,9 @@ class CourseEvalTest(CardTest):
 
         return card_objects_dict
 
+    def safeEnc(self, string):
+        return str(string.encode("utf8"))
+
 
 
 class EvalsShownTest(CourseEvalTest):
@@ -58,7 +61,7 @@ class LinksTest(CourseEvalTest):
             links = {}
             link_elements = card_objects[course].find_elements_by_css_selector("div.myuw-course-eval a")
             for link in link_elements:
-                links[link.text] = link.get_attribute("href")
+                links[self.safeEnc(link.text)] = link.get_attribute("href")
 
             self.assertEqual(sorted(self.links[course]), sorted(links))
 
@@ -89,7 +92,7 @@ class InstructorNameTest(CourseEvalTest):
             name_elements = card_objects[course].find_elements_by_css_selector("ul.myuw-eval-list li.myuw-eval-list-item a")
             
             for element in name_elements:
-                self.assertIn(' '.join(element.text.split(' ')[1:]), self.names[course])
+                self.assertIn(' '.join(self.safeEnc(element.text).split(' ')[1:]), self.names[course])
             
 
 class TabAccessTest(CourseEvalTest):
