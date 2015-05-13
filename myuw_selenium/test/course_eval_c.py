@@ -73,17 +73,18 @@ class CloseDateTest(CourseEvalTest):
             element = card_objects[course]
             text = element.find_element_by_css_selector("span.myuw-eval-close-date").text
 
-            pattern = re.compile('^All evaluations close on ([A-za-z]{3}) ([0-9]{1,2}).*$')
+            pattern = re.compile('^Submit your evaluation between ([A-za-z]{3} [0-9]{1,2}) to ([A-za-z]{3} [0-9]{1,2}.*$')
             match   = re.match(pattern, text)
+            
+            self.assertEqual(self.dates[course], [self.date_from_string(group(1)), self.date_from_string(group(2))])
 
-            month = match.group(1)
-            day   = match.group(2)
+    def date_from_string(self, date_string):
+        month = date_string.split(' ')[0]
+        day   = date_string.split(' ')[1]
 
-            months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            date = datetime.date(2013, months.index(month) + 1, int(day))
-
-            self.assertEqual(self.dates[course], date)
-
+        months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        return datetime.date(2013, months.index(month) + 1, int(day))
+    
 class InstructorNameTest(CourseEvalTest):
     def _test(self):
         card_objects = self.getCardObjects()

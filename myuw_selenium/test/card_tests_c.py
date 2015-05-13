@@ -2,12 +2,29 @@ from myuw_selenium.platforms import on_platforms, SeleniumLiveServerTestCase
 from selenium.webdriver.remote.webelement import WebElement
 import time
 
+from unittest2 import TestCase
+from selenium import webdriver
+import pyvirtualdisplay
+
 # General Test Class
 class CardTest():
 
     def setUp(self):
         SeleniumLiveServerTestCase.setUp(self)
 
+        #**********#
+
+        # self.live_server_url = "http://0.0.0.0:8000"
+        
+        # self.driver  = webdriver.PhantomJS()
+        # self.driver.set_window_size(800, 600)
+        
+        # self.display = pyvirtualdisplay.Display(visible = 1, size = (800, 600))
+        # self.display.start()
+
+        #**********#
+        
+        
         # Override functions
         if hasattr(self, 'user'):
             self.setUser()
@@ -18,6 +35,10 @@ class CardTest():
         # Browse to landing page
         self.driver.get(self.live_server_url + '/mobile/landing')
 
+        #def tearDown(self):
+        #self.driver.quit()
+        #self.display.stop()
+        
     def setUser(self):
         self.driver.get(self.live_server_url + '/users/')
         element = self.driver.find_element_by_xpath("//input[@name='override_as']")
@@ -34,6 +55,7 @@ class CardTest():
         element.submit()
         time.sleep(2)
 
+        
     def getCardObject(self):
         card_object = self.driver.find_element_by_id(self.card_name)
         # Raise AssertionError if card is not displayed
@@ -48,6 +70,7 @@ def create_test_class(_class):
 
     @on_platforms()
     class CardTestWithData(_class, SeleniumLiveServerTestCase):
+    #class CardTestWithData(_class, TestCase):
         def __str__(self):
             return _class.__name__ + ": " + self.test_name
 
