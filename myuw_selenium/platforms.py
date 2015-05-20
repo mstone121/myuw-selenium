@@ -18,7 +18,7 @@ RUN_LOCAL = not RUN_ON_SAUCE
 
 if RUN_LOCAL:
     # could add Chrome, PhantomJS etc... here
-    browsers = ['Chrome']
+    browsers = ['Firefox']
 
     p = sys.platform
     if p in ('win32', 'mac', 'darwin'):
