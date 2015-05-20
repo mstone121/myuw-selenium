@@ -1,5 +1,11 @@
 from myuw_selenium.platforms import on_platforms, SeleniumLiveServerTestCase
 from selenium.webdriver.remote.webelement import WebElement
+
+# Element Retrevial
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 import time
 
 from unittest2 import TestCase
@@ -57,12 +63,27 @@ class CardTest():
 
         
     def getCardObject(self):
-        card_object = self.driver.find_element_by_id(self.card_name)
+        card_object = self.getElement(self.card_name, by_method=By.ID)
         # Raise AssertionError if card is not displayed
         if (not card_object.is_displayed()):
             raise AssertionError('Card not displayed on landing page')
 
         return card_object
+
+    def getElement(self, selector, by_method=By.CSS_SELECTOR):
+        element = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((by_method, selector)))
+        WebDriverWait(self.driver, 10).until(EC.visibility_of(element))
+        return element
+
+    def getElements(self, selector, by_method=By.CSS_SELECTOR):
+        elements = WebDriverWait(self.driver, 10).until(EC.presence_of_all_elements_located((by_method, selector)))
+        for element in elements:
+            try:
+                WebDriverWait(self.driver, 2).until(EC.visibility_of(element))
+            except TimeoutException:
+                elements.remove(element)
+
+        return elements
 
 
 # Helper Functions

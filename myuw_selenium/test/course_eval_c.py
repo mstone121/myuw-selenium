@@ -20,7 +20,8 @@ class CourseEvalTest(CardTest):
             self.all_courses = False
 
     def getCardObjects(self):
-        card_objects = self.driver.find_elements_by_css_selector("div#CourseCard div.card")
+        time.sleep(2)        
+        card_objects = self.getElements("div#CourseCard div.card")
 
         card_objects_dict = {}
         for element in card_objects:
@@ -73,10 +74,10 @@ class CloseDateTest(CourseEvalTest):
             element = card_objects[course]
             text = element.find_element_by_css_selector("span.myuw-eval-close-date").text
 
-            pattern = re.compile('^Submit your evaluation between ([A-za-z]{3} [0-9]{1,2}) to ([A-za-z]{3} [0-9]{1,2}.*$')
+            pattern = re.compile('^Submit your evaluation between ([A-za-z]{3} [0-9]{1,2}) to ([A-za-z]{3} [0-9]{1,2}).*$')
             match   = re.match(pattern, text)
             
-            self.assertEqual(self.dates[course], [self.date_from_string(group(1)), self.date_from_string(group(2))])
+            self.assertEqual(self.dates[course], [self.date_from_string(match.group(1)), self.date_from_string(match.group(2))])
 
     def date_from_string(self, date_string):
         month = date_string.split(' ')[0]
