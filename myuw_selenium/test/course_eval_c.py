@@ -94,7 +94,7 @@ class InstructorNameTest(CourseEvalTest):
             name_elements = card_objects[course].find_elements_by_css_selector("ul.myuw-eval-list li.myuw-eval-list-item a")
             
             for element in name_elements:
-                self.assertIn(' '.join(self.safeEnc(element.text).split(' ')[1:]), self.names[course])
+                self.assertIn(self.safeEnc(element.text), self.names[course])
             
 
 class TabAccessTest(CourseEvalTest):

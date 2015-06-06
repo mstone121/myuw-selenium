@@ -10,95 +10,26 @@ temp_name = "BILL AVERAGE TEACHER"
 #temp_name = "Nancy O\'Brien-Abël"
 
 
-tests = [
-    # Javerage
-    # { 'user':'javerage',
-    #   'date':'2013-06-10', 
-    #   'test_name':'Javerage: Eval shown between a week before finals week and the end of finals week', 
-    #   'test':EvalsShownTest,    
-    #   'courses':['TRAIN 100 A', 'TRAIN 101 A']
-    # },
-
-    # { 'user':'javerage', 
-    #   'date':'2013-06-02',
-    #   'test_name':'Javerage: No eval shown a before a week before finals week',
-    #   'test':EvalsNotShownTest,
-    #   'courses':['TRAIN 100 A', 'TRAIN 101 A']
-    # },
-
-    # { 'user':'javerage', 
-    #   'date':'2013-06-15',
-    #   'test_name':'Javerage: No eval shown after finals week',
-    #   'test':EvalsNotShownTest,
-    #   'courses':['TRAIN 100 A', 'TRAIN 101 A']
-    # },
-    
-
-    # { 'user':'javerage',
-    #   'date':'2013-06-10',
-    #   'test_name':'Javerage: Links are correct (display text and url)',
-    #   'test':LinksTest,
-    #   'courses':['TRAIN 100 A', 'TRAIN 101 A'],
-    #   'links':{
-    #       'TRAIN 100 A' : {
-    #           'Rate JAMES AVERAGE STUDENT':'https://uw.iasysdev.org/survey/136617',
-    #       },
-    #       'TRAIN 101 A' : {
-    #           'Rate EIGHT CLASS STUDENT':'https://uw.iasysdev.org/survey/136617',
-    #           ('Rate ' + temp_name):'https://uw.iasysdev.org/survey/1337',
-    #       }
-    #   }
-    # },           
-
-    # { 'user':'javerage',
-    #   'date':'2013-06-10',
-    #   'test_name':'Javerage: Close date is correct', 
-    #   'test':CloseDateTest,    
-    #   'courses':['TRAIN 100 A', 'TRAIN 101 A'],
-    #   'dates': {
-    #       'TRAIN 100 A': [datetime.date(2013, 4, 5), datetime.date(2013, 5, 13)],
-    #       'TRAIN 101 A': [datetime.date(2013, 4, 5), datetime.date(2013, 5, 13)]
-    #   }
-    # },
-
-    # { 'user':'javerage',
-    #   'date':'2013-06-10',
-    #   'test_name':'Javerage: Instructor name is correct',
-    #   'test':InstructorNameTest,
-    #   'courses':['TRAIN 100 A', 'TRAIN 101 A'],
-    #   'names': {
-    #       'TRAIN 100 A': ['JAMES AVERAGE STUDENT'],
-    #       'TRAIN 101 A': ['EIGHT CLASS STUDENT', temp_name]
-    #   }
-    # },
-
-    # { 'user':'javerage',
-    #   'date':'2013-06-10',
-    #   'test_name':'Javerage: Tab access test',
-    #   'test':TabAccessTest,
-    #   'courses':['TRAIN 101 A', 'TRAIN 100 A']
-    # },
-
-    # Winter Quarter
+tests_javerage_spring = [
     { 'user':'javerage',
       'date':'2013-06-10', 
-      'test_name':'Javerage: Eval shown between a week before finals week and the end of finals week', 
+      'test_name':'Javerage: Eval appear on card', 
       'test':EvalsShownTest,    
-      'courses':['TRAIN 100 A', 'TRAIN 101 A']
+      'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ', 'PHYS 121 AQ']
     },
 
     { 'user':'javerage', 
-      'date':'2013-06-02',
-      'test_name':'Javerage: No eval shown a before a week before finals week',
+      'date':'2013-05-31',
+      'test_name':'Javerage: No evals shown before a week before last day of instruction',
       'test':EvalsNotShownTest,
-      'courses':['TRAIN 100 A', 'TRAIN 101 A']
+      'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ']
     },
 
     { 'user':'javerage', 
-      'date':'2013-06-15',
-      'test_name':'Javerage: No eval shown after finals week',
+      'date':'2013-06-19',
+      'test_name':'Javerage: No eval after shown grade submission deadline',
       'test':EvalsNotShownTest,
-      'courses':['TRAIN 100 A', 'TRAIN 101 A']
+      'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ']
     },
     
 
@@ -106,7 +37,7 @@ tests = [
       'date':'2013-06-10',
       'test_name':'Javerage: Links are correct (display text and url)',
       'test':LinksTest,
-      'courses':['TRAIN 100 A', 'TRAIN 101 A'],
+      'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ'],
       'links':{
           'TRAIN 100 A' : {
               'Rate JAMES AVERAGE STUDENT':'https://uw.iasysdev.org/survey/136617',
@@ -114,6 +45,9 @@ tests = [
           'TRAIN 101 A' : {
               'Rate EIGHT CLASS STUDENT':'https://uw.iasysdev.org/survey/136617',
               ('Rate ' + temp_name):'https://uw.iasysdev.org/survey/1337',
+          },
+          'PHYS 121 A' : {
+              'Rate JAMES AVERAGE STUDENT':'https://uw.iasysdev.org/survey/136617',
           }
       }
     },           
@@ -122,10 +56,11 @@ tests = [
       'date':'2013-06-10',
       'test_name':'Javerage: Close date is correct', 
       'test':CloseDateTest,    
-      'courses':['TRAIN 100 A', 'TRAIN 101 A'],
+      'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ'],
       'dates': {
           'TRAIN 100 A': [datetime.date(2013, 4, 5), datetime.date(2013, 5, 13)],
-          'TRAIN 101 A': [datetime.date(2013, 4, 5), datetime.date(2013, 5, 13)]
+          'TRAIN 101 A': [datetime.date(2013, 4, 5), datetime.date(2013, 5, 13)],
+          'PHYS 121 AQ': [datetime.date(2013, 4, 5), datetime.date(2013, 5, 13)]
       }
     },
 
@@ -133,10 +68,11 @@ tests = [
       'date':'2013-06-10',
       'test_name':'Javerage: Instructor name is correct',
       'test':InstructorNameTest,
-      'courses':['TRAIN 100 A', 'TRAIN 101 A'],
+      'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ'],
       'names': {
           'TRAIN 100 A': ['JAMES AVERAGE STUDENT'],
-          'TRAIN 101 A': ['EIGHT CLASS STUDENT', temp_name]
+          'TRAIN 101 A': ['EIGHT CLASS STUDENT', temp_name],
+          'PHYS 121 AQ': ['JAMES AVERAGE STUDENT']
       }
     },
 
@@ -144,36 +80,35 @@ tests = [
       'date':'2013-06-10',
       'test_name':'Javerage: Tab access test',
       'test':TabAccessTest,
-      'courses':['TRAIN 101 A', 'TRAIN 100 A']
+      'courses':['TRAIN 101 A', 'PHYS 121 AQ', 'TRAIN 100 A']
     },
+]
 
-
-    # Summer Quarters
-    # A-term
+tests_javerage_summer_a = [
     { 'user':'javerage',
-      'date':'2013-07-24', 
-      'test_name':'Javerage (Summer A-term): Eval shown between a week before last day of Summer A-term', 
+      'date':'2013-07-26', 
+      'test_name':'Javerage (Summer A-term): Eval appears on card', 
       'test':EvalsShownTest,    
       'courses':['ELCBUS 451 A']
     },
 
     { 'user':'javerage', 
-      'date':'2013-07-17',
-      'test_name':'Javerage (Summer A-term): No eval shown a before a week before last day of Summer A-term',
+      'date':'2013-07-23',
+      'test_name':'Javerage (Summer A-term): No eval shown a before open date',
       'test':EvalsNotShownTest,
       'courses':['ELCBUS 451 A']
     },
 
     { 'user':'javerage', 
-      'date':'2013-07-25',
-      'test_name':'Javerage (Summer A-term): No eval shown last day of Summer A-term',
+      'date':'2013-07-30',
+      'test_name':'Javerage (Summer A-term): No eval shown after close date',
       'test':EvalsNotShownTest,
       'courses':['ELCBUS 451 A',]
     },
     
 
     { 'user':'javerage',
-      'date':'2013-07-24',
+      'date':'2013-07-26',
       'test_name':'Javerage (Summer A-term): Links are correct (display text and url)',
       'test':LinksTest,
       'courses':['ELCBUS 451 A'],
@@ -185,7 +120,7 @@ tests = [
     },           
 
     { 'user':'javerage',
-      'date':'2013-07-24',
+      'date':'2013-07-26',
       'test_name':'Javerage (Summer A-term): Close date is correct', 
       'test':CloseDateTest,    
       'courses':['ELCBUS 451 A'],
@@ -195,7 +130,7 @@ tests = [
     },
 
     { 'user':'javerage',
-      'date':'2013-07-24',
+      'date':'2013-07-26',
       'test_name':'Javerage (Summer A-term): Instructor name is correct',
       'test':InstructorNameTest,
       'courses':['ELCBUS 451 A'],
@@ -205,37 +140,38 @@ tests = [
     },
 
     { 'user':'javerage',
-      'date':'2013-07-24',
+      'date':'2013-07-26',
       'test_name':'Javerage (Summer A-term): Tab access test',
       'test':TabAccessTest,
       'courses':['ELCBUS 451 A']
     },
+]
 
-    # B-term
+tests_javerage_summer_b = [
     { 'user':'javerage',
-      'date':'2013-08-20', 
-      'test_name':'Javerage (Summer B-term): Eval shown between a week before last day of Summer B-term', 
+      'date':'2013-08-25', 
+      'test_name':'Javerage (Summer B-term): Eval appears on card', 
       'test':EvalsShownTest,    
       'courses':['TRAIN 102 A']
     },
 
     { 'user':'javerage', 
-      'date':'2013-08-16',
-      'test_name':'Javerage (Summer B-term): No eval shown a before a week before last day of Summer B-term',
+      'date':'2013-08-22',
+      'test_name':'Javerage (Summer B-term): No eval shown before open date',
       'test':EvalsNotShownTest,
       'courses':['TRAIN 102 A']
     },
 
     { 'user':'javerage', 
-      'date':'2013-08-25',
-      'test_name':'Javerage (Summer B-term): No eval shown last day of Summer B-term',
+      'date':'2013-08-28',
+      'test_name':'Javerage (Summer B-term): No eval shown after quarter switch',
       'test':EvalsNotShownTest,
       'courses':['TRAIN 102 A']
     },
     
 
     { 'user':'javerage',
-      'date':'2013-08-20',
+      'date':'2013-08-25',
       'test_name':'Javerage (Summer B-term): Links are correct (display text and url)',
       'test':LinksTest,
       'courses':['TRAIN 102 A'],
@@ -247,7 +183,7 @@ tests = [
     },           
 
     { 'user':'javerage',
-      'date':'2013-08-20',
+      'date':'2013-08-25',
       'test_name':'Javerage (Summer B-term): Close date is correct', 
       'test':CloseDateTest,    
       'courses':['TRAIN 102 A'],
@@ -257,7 +193,7 @@ tests = [
     },
 
     { 'user':'javerage',
-      'date':'2013-08-20',
+      'date':'2013-08-25',
       'test_name':'Javerage (Summer B-term): Instructor name is correct',
       'test':InstructorNameTest,
       'courses':['TRAIN 102 A'],
@@ -267,37 +203,37 @@ tests = [
     },
 
     { 'user':'javerage',
-      'date':'2013-08-20',
+      'date':'2013-08-25',
       'test_name':'Javerage (Summer B-term): Tab access test',
       'test':TabAccessTest,
       'courses':['TRAIN 102 A']
     },
+]
 
-
-    # Jbothell
+tests_jbothell = [
     { 'user':'jbothell',
-      'date':'2013-07-24', 
-      'test_name':'Jbothell: Eval shown between a week before finals week and the end of finals week', 
+      'date':'2013-06-10', 
+      'test_name':'Jbothell: Eval appears on card', 
       'test':EvalsShownTest,    
       'courses':['BCWRIT 500 A']
     },
 
     { 'user':'jbothell', 
-      'date':'2013-06-02',
-      'test_name':'Jbothell: No eval shown a before a week before finals week',
+      'date':'2013-05-31',
+      'test_name':'Jbothell: No eval shown a before a week before last day of instruction',
       'test':EvalsNotShownTest,
       'courses':['BCWRIT 500 A']
     },
 
     { 'user':'jbothell',
-      'date':'2013-06-15',
-      'test_name':'Jbothell: No eval shown after finals week',
+      'date':'2013-06-19',
+      'test_name':'Jbothell: No eval shown grade submission deadline',
       'test':EvalsNotShownTest,
       'courses':['BCWRIT 500 A']
     },
 
     { 'user':'jbothell',
-      'date':'2013-07-24',
+      'date':'2013-06-10',
       'test_name':'Jbothell: Links are correct (text and url)',
       'test':LinksTest,
       'courses':['BCWRIT 500 A'],
@@ -309,7 +245,7 @@ tests = [
     },           
 
     { 'user':'jbothell',
-      'date':'2013-07-24',
+      'date':'2013-06-10',
       'test_name':'Jbothell: Close date is correct', 
       'test':CloseDateTest,    
       'courses':['BCWRIT 500 A'],
@@ -319,7 +255,7 @@ tests = [
   },
 
     { 'user':'jbothell',
-      'date':'2013-07-24',
+      'date':'2013-06-10',
       'test_name':'Jbothell: Instructor name is correct',
       'test':InstructorNameTest,
       'courses':['BCWRIT 500 A'],
@@ -329,30 +265,31 @@ tests = [
     },
 
     { 'user':'jbothell',
-      'date':'2013-07-24',
+      'date':'2013-06-10',
       'test_name':'Jbothell: Tab access test',
       'test':TabAccessTest,
       'courses':['BCWRIT 500 A']
     },
+]
 
-    # Eight
+tests_eight = [
     { 'user':'eight',
       'date':'2013-06-10', 
-      'test_name':'Eight: Eval shown between a week before finals week and the end of finals week', 
+      'test_name':'Eight: Eval appears on card', 
       'test':EvalsShownTest,    
       'courses':['T ARTS 110 A']
     },
 
     { 'user':'eight', 
-      'date':'2013-06-02',
-      'test_name':'Eight: No eval shown a before a week before finals week',
+      'date':'2013-05-31',
+      'test_name':'Eight: No eval shown a before a week before last day of instruction',
       'test':EvalsNotShownTest,
       'courses':['T ARTS 110 A']
     },
 
     { 'user':'eight',
-      'date':'2013-06-15',
-      'test_name':'Eight: No eval shown after finals week',
+      'date':'2013-06-19',
+      'test_name':'Eight: No eval shown after grade submission deadline',
       'test':EvalsNotShownTest,
       'courses':['T ARTS 110 A']
     },
@@ -397,19 +334,27 @@ tests = [
     },
 ]
 
+netids = [
+#    tests_javerage_spring,
+#    tests_javerage_summer_a,
+    tests_javerage_summer_b,
+#    tests_jbothell,
+#    tests_eight,
+]
+
 to_run = [
     EvalsShownTest,
     EvalsNotShownTest,
     LinksTest,
     CloseDateTest,
     InstructorNameTest,
-    TabAccessTest,
+#    TabAccessTest,
 ]
     
-
-for test in tests:
-    if (test['test'] in to_run):
-        vars()['test_' + test['test_name']] = create_test_from_test(test)[0]
+for tests in netids:
+    for test in tests:
+        if (test['test'] in to_run):
+            vars()['test_' + test['test_name']] = create_test_from_test(test)[0]
 
 del vars()['test']
 del vars()['tests']
