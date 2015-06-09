@@ -7,6 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from myuw_selenium.test.card_tests_c import CardTest
 
 import time
+import sys
 import re
 import datetime        
 
@@ -14,11 +15,47 @@ import datetime
 class CourseEvalTest(CardTest):
 
     def setUp(self):
+        if hasattr(self, 'system_time'):
+            self.systemTimeSetUp()
+            
         CardTest.setUp(self)
 
         if not hasattr(self, 'all_courses'):
             self.all_courses = False
 
+            
+    def systemTimeSetUp(self):
+        import pudb
+        pudb.set_trace()
+        
+        time_tuple = self.system_time
+        # tuple in the form ( year, month, day, hour, minute, second, millisecond )
+        
+        if sys.platform == 'linux2':
+            import ctypes
+            import ctypes.util
+            
+            CLOCK_REALTIME = 0
+            class timespec(ctypes.Structure):
+                _fields_ = [("tv_sec",  ctypes.c_long),
+                            ("tv_nsec", ctypes.c_long)]
+                
+            librt = ctypes.CDLL(ctypes.util.find_library("rt"))
+                
+            ts = timespec()
+            ts.tv_sec = int( time.mktime( datetime.datetime( *time_tuple[:6]).timetuple() ) )
+            ts.tv_nsec = time_tuple[6] * 1000000
+            
+            librt.clock_settime(CLOCK_REALTIME, ctypes.byref(ts))
+            
+
+        elif sys.platform == 'win32':
+            import pywin32
+            
+            dayOfWeek = datetime.datetime(time_tuple).isocalendar()[2]
+            pywin32.SetSystemTime( time_tuple[:2] + (dayOfWeek,) + time_tuple[2:])
+            
+            
     def getCardObjects(self):
         time.sleep(2)        
         card_objects = self.getElements("div#CourseCard div.card")
@@ -85,6 +122,35 @@ class CloseDateTest(CourseEvalTest):
 
         months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         return datetime.date(2013, months.index(month) + 1, int(day))
+
+    def timeSetUp(self):
+        time_tuple = self.system_time
+        # tuple in the form ( year, month, day, hour, minute, second, millisecond )
+        
+        if sys.platform == 'linux2':
+            import ctypes
+            import ctypes.util
+
+            CLOCK_REALTIME = 0
+            class timespec(ctypes.Structure):
+                _fields_ = [("tv_sec",  ctypes.c_long),
+                            ("tv_nsec", ctypes.c_long)]
+
+            librt = ctypes.CDLL(ctypes.util.find_library("rt"))
+
+            ts = timespec()
+            ts.tv_sec = int( time.mktime( datetime.datetime( *time_tuple[:6]).timetuple() ) )
+            ts.tv_nsec = time_tuple[6] * 1000000
+
+            librt.clock_settime(CLOCK_REALTIME, ctypes.byref(ts))
+            
+
+        elif sys.platform == 'win32':
+            import pywin32
+
+            dayOfWeek = datetime.datetime(time_tuple).isocalendar()[2]
+            pywin32.SetSystemTime( time_tuple[:2] + (dayOfWeek,) + time_tuple[2:])
+            
     
 class InstructorNameTest(CourseEvalTest):
     def _test(self):
@@ -126,3 +192,5 @@ class TabAccessTest(CourseEvalTest):
                                           (element.tag_name, element.text, element.get_attribute('class'), element.get_attribute('id'))))
                     
                 self.send_tab.perform()
+
+

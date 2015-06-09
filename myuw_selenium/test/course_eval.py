@@ -18,19 +18,19 @@ tests_javerage_spring = [
       'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ', 'PHYS 121 AQ']
     },
 
-    { 'user':'javerage', 
-      'date':'2013-05-31',
-      'test_name':'Javerage: No evals shown before a week before last day of instruction',
-      'test':EvalsNotShownTest,
-      'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ']
-    },
+    # { 'user':'javerage', 
+    #   'date':'2013-05-31',
+    #   'test_name':'Javerage: No evals shown before a week before last day of instruction',
+    #   'test':EvalsNotShownTest,
+    #   'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ']
+    # },
 
-    { 'user':'javerage', 
-      'date':'2013-06-19',
-      'test_name':'Javerage: No eval after shown grade submission deadline',
-      'test':EvalsNotShownTest,
-      'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ']
-    },
+    # { 'user':'javerage', 
+    #   'date':'2013-06-19',
+    #   'test_name':'Javerage: No eval after shown grade submission deadline',
+    #   'test':EvalsNotShownTest,
+    #   'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ']
+    # },
     
 
     { 'user':'javerage',
@@ -40,20 +40,21 @@ tests_javerage_spring = [
       'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ'],
       'links':{
           'TRAIN 100 A' : {
-              'Rate JAMES AVERAGE STUDENT':'https://uw.iasysdev.org/survey/136617',
+              'JAMES AVERAGE STUDENT':'https://uw.iasysdev.org/survey/136617',
+              temp_name:'https://uw.iasysdev.org/survey/1337',
           },
           'TRAIN 101 A' : {
-              'Rate EIGHT CLASS STUDENT':'https://uw.iasysdev.org/survey/136617',
-              ('Rate ' + temp_name):'https://uw.iasysdev.org/survey/1337',
+              'EIGHT CLASS STUDENT':'https://uw.iasysdev.org/survey/136617',
           },
-          'PHYS 121 A' : {
-              'Rate JAMES AVERAGE STUDENT':'https://uw.iasysdev.org/survey/136617',
+          'PHYS 121 AQ' : {
+              'JAMES AVERAGE STUDENT':'https://uw.iasysdev.org/survey/136617',
           }
       }
     },           
 
     { 'user':'javerage',
       'date':'2013-06-10',
+      'system_time' : ( 2013, 4, 5, 7, 0, 0, 0 ),
       'test_name':'Javerage: Close date is correct', 
       'test':CloseDateTest,    
       'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ'],
@@ -70,8 +71,8 @@ tests_javerage_spring = [
       'test':InstructorNameTest,
       'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ'],
       'names': {
-          'TRAIN 100 A': ['JAMES AVERAGE STUDENT'],
-          'TRAIN 101 A': ['EIGHT CLASS STUDENT', temp_name],
+          'TRAIN 100 A': ['JAMES AVERAGE STUDENT', temp_name],
+          'TRAIN 101 A': ['EIGHT CLASS STUDENT'],
           'PHYS 121 AQ': ['JAMES AVERAGE STUDENT']
       }
     },
@@ -114,13 +115,14 @@ tests_javerage_summer_a = [
       'courses':['ELCBUS 451 A'],
       'links':{
           'ELCBUS 451 A' : {
-              'Rate JAMES AVERAGE STUDENT':'https://uw.iasystem.org/survey/130808',
+              'JAMES AVERAGE STUDENT':'https://uw.iasystem.org/survey/130808',
           }
       }
     },           
 
     { 'user':'javerage',
       'date':'2013-07-26',
+      'system_time' : ( 2013, 7, 24, 7, 0, 0, 0 ),
       'test_name':'Javerage (Summer A-term): Close date is correct', 
       'test':CloseDateTest,    
       'courses':['ELCBUS 451 A'],
@@ -177,13 +179,14 @@ tests_javerage_summer_b = [
       'courses':['TRAIN 102 A'],
       'links':{
           'TRAIN 102 A' : {
-              'Rate EIGHT CLASS STUDENT':'https://uw.iasystem.org/survey/130810',
+              'TRAIN 102 A':'https://uw.iasystem.org/survey/130810',
           },
       }
     },           
 
     { 'user':'javerage',
       'date':'2013-08-25',
+      'system_time' : ( 2013, 8, 27, 7, 0, 0, 0 ),
       'test_name':'Javerage (Summer B-term): Close date is correct', 
       'test':CloseDateTest,    
       'courses':['TRAIN 102 A'],
@@ -246,6 +249,7 @@ tests_jbothell = [
 
     { 'user':'jbothell',
       'date':'2013-06-10',
+      'system_time' : ( 2013, 5, 12, 7, 0, 0, 0 ),
       'test_name':'Jbothell: Close date is correct', 
       'test':CloseDateTest,    
       'courses':['BCWRIT 500 A'],
@@ -301,13 +305,14 @@ tests_eight = [
       'courses':['T ARTS 110 A'],
       'links':{
           'T ARTS 110 A' : {
-              'Rate EIGHT CLASS STUDENT':'https://uwt.iasystem.org/survey/143301',
+              'EIGHT CLASS STUDENT':'https://uwt.iasystem.org/survey/143301',
           },
       }
     },           
 
     { 'user':'eight',
       'date':'2013-06-10',
+      'system_time' : ( 2013, 6, 12, 7, 0, 0, 0 ),
       'test_name':'Eight: Close date is correct', 
       'test':CloseDateTest,    
       'courses':['T ARTS 110 A'],
@@ -335,18 +340,18 @@ tests_eight = [
 ]
 
 netids = [
-#    tests_javerage_spring,
-#    tests_javerage_summer_a,
+    tests_javerage_spring,
+    tests_javerage_summer_a,
     tests_javerage_summer_b,
 #    tests_jbothell,
-#    tests_eight,
+    tests_eight,
 ]
 
 to_run = [
     EvalsShownTest,
     EvalsNotShownTest,
     LinksTest,
-    CloseDateTest,
+#    CloseDateTest,
     InstructorNameTest,
 #    TabAccessTest,
 ]
