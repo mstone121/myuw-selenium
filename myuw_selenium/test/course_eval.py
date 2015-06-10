@@ -54,7 +54,6 @@ tests_javerage_spring = [
 
     { 'user':'javerage',
       'date':'2013-06-10',
-      'system_time' : ( 2013, 4, 5, 7, 0, 0, 0 ),
       'test_name':'Javerage: Close date is correct', 
       'test':CloseDateTest,    
       'courses':['TRAIN 100 A', 'TRAIN 101 A', 'PHYS 121 AQ'],
@@ -122,7 +121,6 @@ tests_javerage_summer_a = [
 
     { 'user':'javerage',
       'date':'2013-07-26',
-      'system_time' : ( 2013, 7, 24, 7, 0, 0, 0 ),
       'test_name':'Javerage (Summer A-term): Close date is correct', 
       'test':CloseDateTest,    
       'courses':['ELCBUS 451 A'],
@@ -186,7 +184,6 @@ tests_javerage_summer_b = [
 
     { 'user':'javerage',
       'date':'2013-08-25',
-      'system_time' : ( 2013, 8, 27, 7, 0, 0, 0 ),
       'test_name':'Javerage (Summer B-term): Close date is correct', 
       'test':CloseDateTest,    
       'courses':['TRAIN 102 A'],
@@ -249,7 +246,6 @@ tests_jbothell = [
 
     { 'user':'jbothell',
       'date':'2013-06-10',
-      'system_time' : ( 2013, 5, 12, 7, 0, 0, 0 ),
       'test_name':'Jbothell: Close date is correct', 
       'test':CloseDateTest,    
       'courses':['BCWRIT 500 A'],
@@ -312,7 +308,6 @@ tests_eight = [
 
     { 'user':'eight',
       'date':'2013-06-10',
-      'system_time' : ( 2013, 6, 12, 7, 0, 0, 0 ),
       'test_name':'Eight: Close date is correct', 
       'test':CloseDateTest,    
       'courses':['T ARTS 110 A'],
@@ -348,12 +343,12 @@ netids = [
 ]
 
 to_run = [
-    EvalsShownTest,
-    EvalsNotShownTest,
-    LinksTest,
-#    CloseDateTest,
-    InstructorNameTest,
-#    TabAccessTest,
+#    EvalsShownTest,
+#    EvalsNotShownTest,
+#    LinksTest,
+    CloseDateTest,
+#    InstructorNameTest,
+    TabAccessTest,
 ]
     
 for tests in netids:
