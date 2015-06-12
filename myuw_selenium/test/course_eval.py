@@ -177,7 +177,7 @@ tests_javerage_summer_b = [
       'courses':['TRAIN 102 A'],
       'links':{
           'TRAIN 102 A' : {
-              'TRAIN 102 A':'https://uw.iasystem.org/survey/130810',
+              'TRAIN 102 A Evaluation':'https://uw.iasystem.org/survey/130810',
           },
       }
     },           
@@ -343,12 +343,12 @@ netids = [
 ]
 
 to_run = [
-#    EvalsShownTest,
-#    EvalsNotShownTest,
-#    LinksTest,
-    CloseDateTest,
-#    InstructorNameTest,
-    TabAccessTest,
+    EvalsShownTest,
+    EvalsNotShownTest,
+    LinksTest,
+#    CloseDateTest,
+    InstructorNameTest,
+#    TabAccessTest,
 ]
     
 for tests in netids:
