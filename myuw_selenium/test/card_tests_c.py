@@ -13,6 +13,12 @@ from unittest2 import TestCase
 from selenium import webdriver
 import pyvirtualdisplay
 
+import SocketServer
+from wsgiref import handlers
+SocketServer.BaseServer.handle_error = lambda *args, **kwargs: None
+handlers.BaseHandler.log_exception = lambda *args, **kwargs: None
+
+
 # General Test Class
 class CardTest():
 
@@ -40,7 +46,7 @@ class CardTest():
             self.setDate()
 
         # Browse to landing page
-        self.driver.get(self.live_server_url + '/mobile/landing')
+        #self.driver.get(self.live_server_url + '/mobile/landing')
 
         #def tearDown(self):
         #self.driver.quit()

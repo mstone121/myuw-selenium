@@ -22,12 +22,12 @@ password = None
 # except KeyError:
 #     password = getpass.getpass()
 
-# os.remove('db.sqlite3')
+os.remove('db.sqlite3')
     
-# from django.core.management import execute_from_command_line
+from django.core.management import execute_from_command_line
 
 
-#execute_from_command_line(['manage.py', 'syncdb'])
+execute_from_command_line(['manage.py', 'syncdb'])
 
 
 class MUWM_3068(CardTest):
@@ -92,51 +92,51 @@ class MUWM_3068(CardTest):
 
 
 # Tests
-class STEP_2(MUWM_3068):
+class STEP_02(MUWM_3068):
     def _test(self):
         self.date_wrapper('2013-04-26')
         self.assert_fq_cards_top()
         self.assert_ids()
         
-class STEP_3(MUWM_3068):
+class STEP_03(MUWM_3068):
     def _test(self):
         self.date_wrapper('2013-04-27')
         self.assert_fq_cards_top()
         self.assert_ids()
 
-class STEP_4(MUWM_3068):
+class STEP_04(MUWM_3068):
     def _test(self):
         self.date_wrapper('2013-04-28')
         self.assert_fq_cards_bottom()
         self.assert_ids()
 
-class STEP_5(MUWM_3068):
+class STEP_05(MUWM_3068):
     def _test(self):
         self.date_wrapper('2014-06-23')        
         self.assert_fq_cards_bottom()
         self.assert_ids()
 
-class STEP_6(MUWM_3068):
+class STEP_06(MUWM_3068):
     def _test(self):
         self.date_wrapper('2013-06-24')
         self.assert_fq_cards_bottom()
         self.assert_ids(a_term=False)
         self.assert_vs_title("Summer 2013 Courses a-term")
 
-class STEP_7(MUWM_3068):
+class STEP_07(MUWM_3068):
     def _test(self):
         self.date_wrapper('2013-07-17')
         self.assert_fq_cards_bottom()
         self.assert_ids(a_term=False)
 
-class STEP_8(MUWM_3068):
+class STEP_08(MUWM_3068):
     def _test(self):
         for i in range(18, 25):
             self.date_wrapper('2013-07-' + str(i))
             self.assert_fq_cards_top()
             self.assert_ids(a_term=False)
 
-class STEP_9(MUWM_3068):
+class STEP_09(MUWM_3068):
     def _test(self):
         for date in ['07-25', '07-30', '08-01', '08-15', '08-26']:
             self.date_wrapper('2013-' + date)
@@ -167,11 +167,16 @@ class STEP_11(MUWM_3068):
 
 for i in range(2, 12):
 
-    vars()['test_step_' + str(i)] = create_test_from_test(
+    if i < 10:
+        s = '0' + str(i)
+    else:
+        s = str(i)
+        
+    vars()['test_step_' + s] = create_test_from_test(
         {
             'user' : 'javerage',
-            'test_name' : 'step_' + str(i),
-            'test': vars()['STEP_' + str(i)],
+            'test_name' : 'step_' + s,
+            'test': vars()['STEP_' + s],
         }
     )[0]
 
