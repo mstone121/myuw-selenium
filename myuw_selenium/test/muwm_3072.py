@@ -30,13 +30,12 @@ from django.core.management import execute_from_command_line
 execute_from_command_line(['manage.py', 'syncdb'])
 
 
-class MUWM_3068(CardTest):
+class MUWM_3072(CardTest):
 
     def date_wrapper(self, date):
         self.date = date
         self.setDate()
         self.driver.get(self.live_server_url + '/mobile/landing')
-
 
     def assert_fq_cards_bottom(self):
         cards = self.getElements("div#landing_content > div")
@@ -73,14 +72,11 @@ class MUWM_3068(CardTest):
 
         return data
 
-    def assert_ids(self, a_term=True, b_term=True, autumn=True):
+    def assert_ids(self, summer=True, autumn=True):
         data_ids = self.get_data_identifiers()
 
-        if a_term:
-            assert 'Summer 2013 a-term' in data_ids, data_ids
-
-        if b_term:
-            assert 'Summer 2013 b-term' in data_ids, data_ids
+        if summer:
+            assert 'Summer 2013' in data_ids, data_ids
 
         if autumn:
             assert 'Autumn 2013' in data_ids, data_ids
@@ -92,80 +88,67 @@ class MUWM_3068(CardTest):
 
 
 # Tests
-class STEP_02(MUWM_3068):
+class STEP_02(MUWM_3072):
     def _test(self):
         self.date_wrapper('2013-04-26')
         self.assert_fq_cards_top()
         self.assert_ids()
         
-class STEP_03(MUWM_3068):
+class STEP_03(MUWM_3072):
     def _test(self):
         self.date_wrapper('2013-04-27')
         self.assert_fq_cards_top()
         self.assert_ids()
 
-class STEP_04(MUWM_3068):
+class STEP_04(MUWM_3072):
     def _test(self):
         self.date_wrapper('2013-04-28')
         self.assert_fq_cards_bottom()
         self.assert_ids()
 
-class STEP_05(MUWM_3068):
+class STEP_05(MUWM_3072):
     def _test(self):
         self.date_wrapper('2014-06-23')        
         self.assert_fq_cards_bottom()
         self.assert_ids()
+        self.assert_vs_title("Summer 2013 Courses")
 
-class STEP_06(MUWM_3068):
+class STEP_06(MUWM_3072):
     def _test(self):
         self.date_wrapper('2013-06-24')
         self.assert_fq_cards_bottom()
-        self.assert_ids(a_term=False)
-        self.assert_vs_title("Summer 2013 Courses a-term")
+        self.assert_ids(summer=False)
 
-class STEP_07(MUWM_3068):
+class STEP_07(MUWM_3072):
     def _test(self):
         self.date_wrapper('2013-07-17')
         self.assert_fq_cards_bottom()
-        self.assert_ids(a_term=False)
+        self.assert_ids(summer=False)
+        self.assert_vs_title("Summer 2013 Courses")
 
-class STEP_08(MUWM_3068):
+class STEP_08(MUWM_3072):
     def _test(self):
-        for i in range(18, 25):
-            self.date_wrapper('2013-07-' + str(i))
-            self.assert_fq_cards_top()
-            self.assert_ids(a_term=False)
-
-class STEP_09(MUWM_3068):
-    def _test(self):
-        for date in ['07-25', '07-30', '08-01', '08-15', '08-26']:
+        for date in ['07-18', '07-25']:
             self.date_wrapper('2013-' + date)
-            self.assert_fq_cards_bottom()
-            self.assert_ids(a_term=False, b_term=False)
+            self.assert_fq_cards_top()
+            self.assert_ids(summer=False)
 
-class STEP_10(MUWM_3068):
+class STEP_09(MUWM_3072):
+    def _test(self):
+        self.date_wrapper('2013-07-25')        
+        self.assert_fq_cards_bottom()
+        self.assert_ids(summer=False)
+
+class STEP_10(MUWM_3072):
     def _test(self):
         self.date_wrapper('2013-08-27')
         self.assert_fq_cards_bottom()
-        self.assert_ids(a_term=False, b_term=False)
-
-class STEP_11(MUWM_3068):
-    def _test(self):
-        self.date_wrapper('2013-08-28')
-
-        cards = self.getElements("div#landing_content > div")
-        ids = []
-
-        for card in cards:
-            ids.append(card.get_attribute('id'))
-
-        assert 'FutureQuarterCards1' not in ids
-        assert 'FutureQuarterCardsA' not in ids        
-            
+        self.assert_ids(summer=False)
 
 
 
-for i in range(2, 12):
+        
+for i in range(2, 11):
 
     if i < 10:
         s = '0' + str(i)

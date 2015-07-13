@@ -10,6 +10,10 @@
 
 #from myuw_selenium.test.course_eval import *
 
-from myuw_selenium.test.muwm-3068 import *
-from myuw_selenium.test.muwm-3067 import *
-from myuw_selenium.test.muwm-3072 import *
+#from myuw_selenium.test.muwm_3068 import *
+#from myuw_selenium.test.muwm_3067 import *
+#from myuw_selenium.test.muwm_3072 import *
+
+from myuw_selenium.test.muwm_3083 import *
+from myuw_selenium.test.muwm_3085 import *
+from myuw_selenium.test.muwm_3086 import *
